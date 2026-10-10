@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output and tool caches
+dist/
+.astro/
+*.tsbuildinfo
+.eslintcache
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files (secrets); the example stays tracked
+.env
+.env.*
+!.env.example
+
+# Project-local conda environment
+.conda/
+
+# Local deployment runtime
+.deploy/
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary implementation plans
+.plan/

@@ -1,0 +1,6 @@
+name: ac-site
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - nodejs=24.21.0
