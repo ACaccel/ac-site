@@ -32,8 +32,9 @@ bash deploy/rollback.sh    # point the live site at the previous release
 snippets in `deploy/nginx/` or the site-file routing differ from the installed state, it installs
 them, replaces the placeholder `location / { return 404; }` in both server blocks of
 `/etc/nginx/sites-enabled/acserver.csie.org` with `# ac-site managed route` blocks, and reloads
-Nginx only after `nginx -t` passes. Any failure, including the public health checks, restores
-the previous release, site file, and snippets. Backups and the newest five releases are kept
+Nginx only after `nginx -t` passes. Any failure, including a failed health check, restores
+the previous release, site file, and snippets, as does an interrupt. Health checks call the
+local listeners found in the site file. Backups and the newest five releases are kept
 under `/var/backups/ac-site/` and `/var/www/ac-site/releases/`.
 
 To take the site off the domain root, write a candidate with

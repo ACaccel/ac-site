@@ -12,7 +12,8 @@ exec 9>/run/lock/ac-site-deploy.lock
 flock -n 9 || { echo 'An ac-site deployment is running.' >&2; exit 1; }
 
 current=$(readlink "$web_root/current")
-previous=$(find "$web_root/releases" -mindepth 1 -maxdepth 1 -type d -name '*Z-*' -printf '%f\n' \
+previous=$(find "$web_root/releases" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \
+  -regex '.*/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12,40}' -printf '%f\n' \
   | sort | grep -B1 -Fx "${current#releases/}" | head -n -1 || true)
 if [[ -z $previous ]]; then
   echo "No release older than $current is available." >&2
