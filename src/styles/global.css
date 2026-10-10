@@ -111,3 +111,8 @@ h2 {
   color: var(--muted);
   font-size: 0.875rem;
 }
+
+.not-found h1 {
+  margin: 3rem 0 1rem;
+  font-size: 2rem;
+}

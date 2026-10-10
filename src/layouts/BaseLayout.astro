@@ -6,9 +6,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  /** Error pages are served at arbitrary URLs, so they must not claim a canonical URL. */
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const lang = isLocale(Astro.currentLocale) ? Astro.currentLocale : defaultLocale;
 ---
 
@@ -20,11 +22,17 @@ const lang = isLocale(Astro.currentLocale) ? Astro.currentLocale : defaultLocale
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href={getAbsoluteLocaleUrl(lang)} />
-    {locales.map((locale) => (
-      <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale)} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale)} />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="canonical" href={getAbsoluteLocaleUrl(lang)} />
+        {locales.map((locale) => (
+          <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale)} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale)} />
+      </>
+    )}
     <title>{title}</title>
   </head>
   <body>
