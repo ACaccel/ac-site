@@ -1,0 +1,4 @@
+dist/
+.astro/
+.conda/
+package-lock.json
