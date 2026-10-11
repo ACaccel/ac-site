@@ -1,180 +1,102 @@
-# Personal website roadmap
+# 個人網站開發方向
 
-Status: proposed directions, not implementation commitments. Reviewed on 2026-10-11
-against the repository at `61167f2` and its locally built homepage at desktop and mobile widths.
-This is a content and design assessment, not a production availability, accessibility, or
-performance audit. Project constraints and operational instructions remain authoritative in
-[AGENTS.md](../AGENTS.md).
+狀態：以下為方向建議，尚未決定實作。評估日期為 2026-10-11，依據 commit `61167f2` 的專案內容，以及本機建置後首頁在桌面與手機寬度下的呈現。
 
-## Current assessment
+本文件評估內容與設計，未進行正式環境可用性、無障礙或效能稽核。專案限制與操作規範以 [AGENTS.md](../AGENTS.md) 為準。
 
-The site already provides a useful foundation: equivalent Chinese and English homepages,
-a short introduction, two public service links, a GitHub profile link, system-based light and
-dark colors, and a static build with deployment and rollback tooling. The restrained typography,
-teal accent, narrow reading column, and outlined service cards work well for a small directory.
+## 現況評估
 
-The main opportunity is to explain the person behind the services. A first-time visitor can
-find Card Together and LARP Platform, but cannot learn the owner's specific contribution,
-engineering decisions, or interests beyond the introductory sentence. Hosting a service does
-not establish authorship; future project descriptions should state the verified role explicitly.
-There are currently no project case studies, articles, screenshots, public contact address,
-or social sharing metadata. The homepage also repeats the name in the header and main heading
-without adding a more distinctive introduction.
+網站已具備實用的基礎：內容對應的中英文首頁、簡短自我介紹、兩個公開服務入口、GitHub 個人頁連結、依系統設定切換的明暗配色，以及靜態建置、部署與回復工具。現有的簡潔字體、青綠色重點、適合閱讀的窄版內容與框線服務卡片，都適合小型服務目錄。
 
-Recommended default: grow into a compact personal portfolio with a useful service directory.
-Keep the homepage short and put detailed stories on separate pages. This recommendation assumes
-the audience includes peers and potential collaborators; recruitment, research, or community
-building could change the priorities below.
+目前最值得補強的是服務背後的個人介紹。初次造訪的人可以找到 Card Together 與 LARP Platform，卻無法進一步了解站主的具體貢獻、技術決策與興趣。代管服務不代表開發該服務，未來的專案介紹應清楚標示經確認的參與角色。網站目前也沒有作品案例、文章、截圖、公開聯絡地址或社群分享資訊；頁首與主標題重複顯示名稱，尚未利用主標題呈現更有辨識度的介紹。
 
-## Potential content
+建議逐步發展成精簡的個人作品集，同時保留實用的服務目錄。首頁維持簡短，詳細故事放在獨立頁面。這項建議假設主要讀者包含同儕與潛在合作對象；若目標改為求職、研究交流或社群經營，下列優先順序也應調整。
 
-Effort is relative: **small** means one focused content or layout change; **medium** means a
-new content type and bilingual pages; **large** means ongoing publishing or operational work.
-Translation, asset preparation, and permission to publish can dominate implementation effort.
+## 可以新增的內容
 
-| Direction                          | Visitor value and smallest useful version                                                                                                                       | Effort / maintenance                     | Priority        |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | --------------- |
-| Selected projects and case studies | Two verified examples with the problem, personal role, approach, outcome, and links. Distinguish implementation, collaboration, and hosting.                    | Medium / update when a project changes   | P1              |
-| More personal introduction         | A short statement of current interests and the kinds of collaboration welcomed. Link to projects and GitHub; publish a contact method only after choosing it.   | Small / occasional review                | P1              |
-| Clearer service discovery          | Keep the existing directory; make “Open service” and “Source” actions explicit, and explain who each service is for. Add sanitized preview images where useful. | Small to medium / review links           | P1              |
-| Technical notes                    | Start with two complete articles about a public project decision or a general engineering lesson. Include dates and equivalent translations.                    | Medium / high editorial commitment       | P2              |
-| About and experience               | A short narrative, selected experience, and public achievements. Add a résumé only if professional discovery becomes a goal.                                    | Medium / periodic review                 | P2, conditional |
-| Now page                           | A dated snapshot of current learning or work, without private details. Useful only if it can be refreshed regularly.                                            | Small / frequent editorial review        | P3              |
-| Small interactive demonstrations   | One self-contained game mechanic, algorithm visualization, or tool related to an actual project, with an accessible text explanation.                           | Medium to large / browser and CSP checks | P3, conditional |
-| Public service status              | Link to an existing public status page first. Build an integration only if service users need it and monitoring already exists.                                 | Large / ongoing operations               | P3, conditional |
-| Uses, reading notes, or interests  | A curated page that adds personality and explains choices, rather than a long list of products or links.                                                        | Small / periodic review                  | P3              |
+工作量採相對評估：**小**代表單一內容或版面調整；**中**代表新增內容類型與雙語頁面；**大**代表持續出版或維運工作。翻譯、素材準備及確認公開權限，可能比程式實作更耗時。
 
-### First project case study
+| 方向                     | 對訪客的價值與最小可用內容                                                                             | 工作量／維護需求               | 優先順序       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------ | -------------- |
+| 精選作品與案例           | 先放兩個經確認的案例，說明問題、個人角色、做法、成果與相關連結，區分開發、協作及代管。                 | 中／專案變動時更新             | P1             |
+| 更具個人特色的介紹       | 簡短說明目前關注的領域與歡迎的合作方式，連到作品及 GitHub；選定聯絡方式後再公開。                      | 小／偶爾檢視                   | P1             |
+| 更清楚的服務入口         | 保留現有目錄，清楚標示「開啟服務」與「原始碼」，說明各服務適合誰使用；有幫助時加入經去識別化的預覽圖。 | 小至中／檢查連結               | P1             |
+| 技術筆記                 | 先完成兩篇介紹公開專案決策或通用工程經驗的文章，附上日期與內容對應的翻譯。                             | 中／需持續投入寫作與編輯       | P2             |
+| 關於我與經歷             | 簡短介紹背景、精選經歷與可公開的成果；若目標包含求職或專業合作，再加入履歷。                           | 中／定期檢視                   | P2，視目標決定 |
+| 近況頁（Now）            | 附日期的學習或工作近況，排除私人細節；能定期更新才值得加入。                                           | 小／需經常更新                 | P3             |
+| 小型互動展示             | 展示與實際專案相關的遊戲機制、演算法視覺化或工具，並提供可供閱讀的文字說明。                           | 中至大／需驗證瀏覽器行為與 CSP | P3，視需求決定 |
+| 公開服務狀態             | 優先連到既有公開狀態頁；使用者有需求且已有監測機制時，再評估整合。                                     | 大／持續維運                   | P3，視需求決定 |
+| 工具使用、閱讀筆記或興趣 | 精選能展現個人特色並解釋選擇理由的內容，避免只列出大量產品或連結。                                     | 小／定期檢視                   | P3             |
 
-Use a repeatable structure: a one-paragraph problem statement, the owner's contribution,
-one or two difficult decisions, a sanitized screenshot or diagram, and what was learned.
-Include a live link and a repository link when public. Quantitative results should have evidence;
-a clear qualitative outcome is preferable to invented adoption or performance numbers.
+### 第一篇作品案例
 
-Card Together or LARP Platform could provide material, but the owner's role and publishable
-assets must be confirmed before drafting claims. Other public work can be selected instead.
-Use synthetic accounts in screenshots and retain collaborator attribution. Choose projects for
-the story they tell, not just because they happen to run on this host.
+建立可重複使用的結構：用一段話說明問題，再介紹個人貢獻、一至兩個困難的決策、經去識別化的截圖或示意圖，以及學到的事情。服務與 repository 可公開時，附上連結。量化成果需要證據；沒有數據時，清楚描述實際成果即可。
 
-### Publishing model
+Card Together 或 LARP Platform 可以作為候選，但撰寫前須確認站主角色與素材公開權限，也可以選擇其他公開作品。截圖使用虛構帳號，並保留協作者署名。選擇作品的依據應是它能呈現什麼故事，而不只是它部署在這台主機上。
 
-Use build-time content collections for project descriptions and, later, Markdown articles.
-[Astro content collections](https://docs.astro.build/en/guides/content-collections/) provide
-schema validation and build-time content access. Keep portfolio content separate from the
-existing service directory so adding a public service remains a data-only operation.
+### 內容發布方式
 
-Launch an article section only when its first complete bilingual entries are ready. Add RSS
-with the first publication batch; add tags and search when the amount of content makes browsing
-difficult. A CMS is a later option if editing Markdown becomes a demonstrated obstacle.
+作品介紹與未來的 Markdown 文章可使用建置時載入的 content collections。[Astro content collections](https://docs.astro.build/en/guides/content-collections/) 提供 schema 驗證與建置時內容存取。作品內容與既有服務目錄應分開管理，讓新增公開服務繼續維持只修改資料的操作方式。
 
-## Design directions
+等第一批完整的雙語文章準備好，再推出文章區，並一併加入 RSS。當文章數量使瀏覽變得困難時，再加入標籤與搜尋。如果日後確認編輯 Markdown 成為障礙，再評估 CMS。
 
-| Option                                    | What it would look like                                                                                                                 | Benefit and trade-off                                                                        |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Refined editorial portfolio — recommended | Keep the neutral palette and teal accent; add a stronger introductory statement, selected work with previews, and clear section rhythm. | Fits the current site and scales to articles with modest CSS and asset work.                 |
-| Visual project gallery                    | Larger screenshots, a wider project grid, and more prominent project actions. Keep article text in a narrow column.                     | Stronger visual evidence, but requires consistently good images and more mobile layout work. |
-| Developer notebook                        | Text-led homepage with recent notes, project summaries, and small technical diagrams.                                                   | Suits regular writing; depends on a sustainable publishing habit.                            |
+## 設計方向
 
-The existing content and assumed audience support the editorial option most strongly. Adopt the gallery
-if polished visual projects become the main attraction, or the notebook if writing becomes the
-main reason to return. These are proposals, not a reason to redesign before gathering content.
+| 選項                             | 呈現方式                                                                   | 優點與取捨                                                 |
+| -------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| 精簡的編輯式作品集，建議優先採用 | 保留中性色與青綠色重點，強化自我介紹，加入精選作品預覽與清楚的區塊節奏。   | 延續現有風格，只需適度調整 CSS 與素材，也容易擴充文章。    |
+| 視覺作品展示                     | 使用較大的截圖、較寬的作品網格與明確的操作入口，文章仍維持適合閱讀的窄版。 | 更容易看見作品成果，但需要品質一致的圖片與更多手機版調整。 |
+| 開發者筆記                       | 以文字為主，首頁呈現近期筆記、作品摘要與小型技術示意圖。                   | 適合持續寫作，但需要能長期維持的發布習慣。                 |
 
-### Concrete improvements
+依現有內容與假設的讀者，編輯式作品集最適合先採用。如果未來以視覺完整的作品為主，再轉向作品展示；若文章成為讀者回訪的主因，則轉向開發者筆記。應先準備內容，再決定是否需要全面改版。
 
-- **Introduction:** retain the name in the header, then use the main heading and short lead to
-  communicate interests and purpose. Avoid oversized hero graphics that push useful links away.
-- **Homepage hierarchy:** introduce the owner, show two selected projects, retain the public
-  services, and finish with profile/contact links. Add recent notes only after articles exist.
-  Keep service access easy to find for returning users.
-- **Project previews:** use local, optimized images with fixed dimensions and meaningful alt
-  text. Show role and outcome alongside the image. Services and case studies should have
-  distinct actions so visitors understand whether they are launching a tool or reading about it.
-- **Layout and navigation:** keep the reading width for prose; consider two project columns on
-  wide screens and one on mobile. Add a small navigation bar when there are separate sections,
-  with a visible current-page state and a skip link. Account for longer English text.
-- **Visual identity:** extend the existing AC favicon and teal palette into consistent spacing,
-  headings, borders, and buttons. A monogram, small illustration, or chosen avatar can add
-  personality; a portrait and custom font are optional, not prerequisites.
-- **Accessibility:** validate light and dark contrast, keyboard focus, headings, image
-  alternatives, touch targets, text zoom, and narrow-screen reflow against
-  [WCAG 2.2 guidance](https://www.w3.org/WAI/WCAG22/quickref/). The existing focus styles are a
-  useful starting point; browser previews alone do not establish conformance.
-- **Motion and themes:** use subtle CSS feedback where it clarifies an action and respect
-  reduced-motion preferences. Keep system-based themes initially; a manual toggle is worthwhile
-  only if users need it and its script can meet the production security policy.
+### 具體改善項目
 
-## Development sequence
+- **自我介紹：**頁首保留名稱，主標題與短引言用來說明興趣與網站目的。避免過大的首頁視覺讓實用連結被推到下方。
+- **首頁層次：**依序呈現自我介紹、兩個精選作品、公開服務，以及個人頁與聯絡連結。已有文章後再加入近期筆記，並讓回訪使用者容易找到服務入口。
+- **作品預覽：**使用本機提供、經最佳化的圖片，設定固定尺寸與有意義的替代文字，旁邊說明角色與成果。服務入口與案例閱讀入口應明確區分，讓訪客知道點擊後會開啟工具或閱讀介紹。
+- **版面與導覽：**文字維持適合閱讀的寬度；作品在寬螢幕可採雙欄、手機採單欄。出現獨立內容區後，再加入簡單導覽列、目前頁面標示與跳至主要內容的連結，並考慮英文較長的文字。
+- **視覺識別：**延伸既有 AC favicon 與青綠色配色，統一間距、標題、框線及按鈕。字母標誌、小插圖或選定的頭像能增加個人特色；照片與自訂字體可依需要加入。
+- **無障礙：**依 [WCAG 2.2 指引](https://www.w3.org/WAI/WCAG22/quickref/) 驗證明暗模式對比、鍵盤焦點、標題結構、圖片替代文字、觸控目標、文字放大與窄螢幕排版。現有焦點樣式是好的起點，但僅檢視瀏覽器預覽不足以確認符合標準。
+- **動態效果與主題：**在能幫助理解操作的地方加入輕微 CSS 回饋，並尊重減少動態效果的偏好。初期維持依系統切換明暗模式；使用者有需求，且程式能符合正式環境安全政策時，再考慮手動切換。
 
-### P1 — Establish identity and show evidence
+## 建議開發順序
 
-1. Confirm the primary audience and select two public projects with verified contribution and
-   publishable assets. Choose the editorial visual direction unless the content suggests otherwise.
-2. Improve the introduction and service actions; add selected-project previews using approved
-   content. Create paired project detail pages and lightweight navigation.
-3. Add page-specific titles and descriptions, local social preview images, and a sitemap. Titles
-   should clearly describe each page; see Google's
-   [title link guidance](https://developers.google.com/search/docs/appearance/title-link).
-   Add social metadata as a separate sharing improvement, without promising ranking gains.
-4. Validate desktop and mobile layouts, both languages, keyboard access, and production routing.
+### P1：建立個人特色與具體成果
 
-Completion: a visitor can understand the owner's interests, inspect two concrete contributions,
-and reach the existing services. Every new page has its own correct metadata and language pair.
-No public contact details are added without the owner's choice.
+1. 確認主要讀者，挑選兩個能確認個人貢獻、且素材可公開的作品。原則上採編輯式設計，除非內容更適合其他方向。
+2. 改善自我介紹與服務入口，使用確認可公開的內容加入作品預覽，建立成對的雙語作品詳情頁與簡單導覽。
+3. 加入每頁專屬標題與描述、本機提供的社群分享預覽圖及 sitemap。標題應清楚描述頁面，可參考 Google 的[搜尋結果標題連結指引](https://developers.google.com/search/docs/appearance/title-link)。社群分享資訊用來改善分享呈現，不應承諾能提升搜尋排名。
+4. 驗證桌面與手機版、兩種語言、鍵盤操作及正式環境路由。
 
-### P2 — Build a reusable publishing foundation
+完成條件：訪客能理解站主的興趣、查看兩個具體貢獻案例，並進入既有服務。每個新頁面都有正確的專屬資訊與對應語言版本。公開聯絡方式須由站主選定。
 
-1. Publish two complete technical notes using validated content and a shared article layout.
-2. Add a notes index, RSS, and a small recent-notes section on the homepage.
-3. Add an About page or a public résumé if the chosen audience needs more background.
-4. Add CI for the existing check command and targeted coverage for new routing, translation,
-   metadata, and content-validation behavior. Review links and outdated content periodically.
+### P2：建立可重複使用的內容發布基礎
 
-Completion: publishing a new bilingual article requires content and assets rather than copied
-page markup. Reader navigation and project/service links remain usable without JavaScript.
+1. 使用經驗證的內容與共用文章版面，發布兩篇完整的技術筆記。
+2. 加入文章列表、RSS，以及首頁的小型近期筆記區。
+3. 若目標讀者需要更多背景，加入「關於我」頁面或公開履歷。
+4. 讓 CI 執行既有檢查指令，並針對新增的路由、翻譯、頁面資訊與內容驗證行為補上測試。定期檢查連結與過時內容。
 
-### P3 — Expand only when there is demand
+完成條件：發布雙語文章只需新增內容與素材，不必複製頁面結構。讀者在停用 JavaScript 時仍能使用導覽、作品與服務連結。
 
-Choose one direction based on actual use: richer project visuals, more writing, an interactive
-demo, or a public status link. Search is justified by a growing archive; status integration is
-justified by service-support needs. Review whether new dependencies and recurring work improve
-the experience enough to sustain them. There is no calendar commitment for these phases.
+### P3：依實際需求擴充
 
-## Technical dependencies to resolve during implementation
+依使用情況選擇一個方向：更完整的作品視覺、更多文章、互動展示，或公開狀態頁連結。文章累積後才需要搜尋；服務支援有需求時才需要狀態整合。新增相依套件與持續維護工作前，先評估改善是否值得長期投入。各階段目前沒有固定時程。
 
-- **Page URLs:** `BaseLayout.astro` currently generates canonical and alternate links for locale
-  roots, which works for the current homepage. Before adding detail pages, derive those links
-  from each page and its translated counterpart. Likewise, preserve the current page when
-  switching languages; keep the shared bilingual 404 behavior and its `noindex` metadata.
-- **Route ownership:** reserve proposed sections such as `/projects/`, `/notes/`, and `/about/`
-  before publishing them. Check the shared host's existing service routes and expand the
-  service-path validation accordingly. Site pages must not shadow public service prefixes.
-- **Security policy:** the repository's Nginx CSP denies scripts and external fonts by
-  default. Static pages and CSS improvements fit it; an interactive feature needs an explicit,
-  minimal policy change and verification. Syntax highlighting, embeds, and generated markup
-  must also be checked for inline scripts or styles. Follow the project rules rather than
-  assuming development-server behavior represents production.
-- **Status semantics:** a successful build or homepage request does not prove service health.
-  A future status display needs an independent check, a last-checked timestamp, an unknown/stale
-  state, and a failure policy. A static build-time snapshot must never imply live monitoring.
-- **Performance:** keep images local and sized for their display, defer below-the-fold media,
-  and retain static rendering. Measure the current build before setting an asset or performance
-  budget; no speed score or production latency was measured for this roadmap.
-- **Validation:** keep the existing check command as the baseline. New features need relevant
-  checks for language equivalence, reserved paths, metadata, and generated HTML, plus browser
-  checks for layouts and keyboard interaction. Any new test infrastructure needs agreement.
+## 實作時須處理的技術前提
 
-## Lower-priority features and decision gates
+- **頁面 URL：**目前 `BaseLayout.astro` 的 canonical 與 alternate 連結指向各語言首頁，適用現有首頁。新增詳情頁前，須依各頁與對應翻譯產生連結；語言切換也應保留目前頁面。維持共用雙語 404 頁與 `noindex` 設定。
+- **路由使用權：**發布前先保留 `/projects/`、`/notes/`、`/about/` 等候選路徑，檢查共用主機既有服務路由，並擴充服務路徑驗證。網站頁面不得占用公開服務的路徑前綴。
+- **安全政策：**repository 的 Nginx CSP 預設禁止 script 與外部字體。靜態頁面與 CSS 改善符合現有設定；互動功能需要明確、最小範圍的政策調整與驗證。語法上色、嵌入內容與產生的 HTML，也須檢查是否含 inline script 或 inline style。遵循專案規範，不能假設開發伺服器的行為等同正式環境。
+- **狀態資訊：**建置成功或首頁請求成功，都不足以證明服務正常。未來若顯示服務狀態，需要獨立檢查、最後檢查時間、未知或過期狀態，以及檢查失敗時的處理方式。建置時產生的靜態快照不可讓人誤以為是即時監測。
+- **效能：**圖片由本站提供，依實際顯示尺寸處理，延後載入首屏之外的媒體，並保留靜態輸出。先量測目前建置，再設定資源大小或效能目標。本次 roadmap 未量測速度評分或正式環境延遲。
+- **驗證：**以既有檢查指令為基準。新功能須補上雙語內容對應、保留路徑、頁面資訊與產生 HTML 的相關檢查，並在瀏覽器驗證版面與鍵盤操作。引入新的測試基礎設施前，須先取得同意。
 
-Comments, accounts, a contact-form backend, live GitHub widgets, and third-party analytics bring
-moderation, privacy, integration, or operational costs without a demonstrated current need.
-Prefer profile links, static summaries, and a deliberately chosen contact link initially.
-Analytics can be evaluated if there is a concrete measurement question; traffic collection is
-not a prerequisite for publishing useful work.
+## 較低優先項目與實作前決策
 
-Before implementing a phase, decide its audience, available bilingual content, visual direction,
-public contact preference, and sustainable update cadence. These decisions affect the result;
-routine component and CSS choices can follow the existing project conventions.
+留言、帳號、聯絡表單後端、即時 GitHub 元件與第三方流量分析，都會增加內容管理、隱私、整合或維運成本，目前尚未有明確需求。初期優先使用個人頁連結、靜態摘要與選定的聯絡連結。有具體的量測問題時，再評估流量分析；發布有用內容不需要先蒐集流量。
 
-The highest-value next increment is two credible project stories with a clearer introduction
-and improved sharing metadata. It adds substance and identity while preserving the site's
-simple operation and useful service links.
+每個階段實作前，先決定目標讀者、可用的雙語內容、設計方向、公開聯絡方式與能維持的更新頻率。這些選擇會影響成果；一般元件與 CSS 細節則可沿用既有專案慣例。
+
+最值得先做的是兩篇可信的作品案例、更清楚的自我介紹，以及完整的分享資訊。這些變更能增加內容深度與個人特色，同時保留網站簡單的維運方式與實用服務入口。
