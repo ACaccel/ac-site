@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { profile } from '../../data/profile';
+import { formatDate, getPosts, type Post } from '../../data/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, date, updated } = post.data;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${title} | ${profile.name}`} description={description}>
+  <SiteHeader />
+  <main>
+    <article>
+      <header class="post-header">
+        <h1 class="page-title">{title}</h1>
+        <p class="muted">
+          <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date)}</time>
+          {updated && (
+            <>
+              {' · Updated '}
+              <time datetime={updated.toISOString().slice(0, 10)}>{formatDate(updated)}</time>
+            </>
+          )}
+        </p>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+</BaseLayout>

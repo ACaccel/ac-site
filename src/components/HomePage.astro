@@ -1,25 +1,40 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from './PostList.astro';
 import ServiceList from './ServiceList.astro';
+import SiteHeader from './SiteHeader.astro';
+import { Content as About } from '../content/about.md';
 import { profile } from '../data/profile';
+import { getPosts } from '../data/posts';
+
+const recentPostCount = 5;
+const posts = await getPosts();
+const recentPosts = posts.slice(0, recentPostCount);
 ---
 
 <BaseLayout
   title={profile.name}
   description="ACaccel's personal website and the services hosted on acserver.csie.org."
 >
-  <header class="site-header">
-    <span class="site-name">{profile.name}</span>
-  </header>
+  <SiteHeader />
   <main>
     <section class="intro">
       <h1>{profile.name}</h1>
-      <p>
-        Based at the Department of Electrical Engineering, National Taiwan University, working on
-        software development and server operations. This site lists the public services hosted on
-        this server.
-      </p>
+      <div class="prose">
+        <About />
+      </div>
     </section>
+    {recentPosts.length > 0 && (
+      <section aria-labelledby="posts-heading">
+        <h2 id="posts-heading">Posts</h2>
+        <PostList posts={recentPosts} />
+        {posts.length > recentPostCount && (
+          <p>
+            <a href="/posts/">All posts</a>
+          </p>
+        )}
+      </section>
+    )}
     <section aria-labelledby="services-heading">
       <h2 id="services-heading">Services</h2>
       <ServiceList />

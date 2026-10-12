@@ -22,17 +22,18 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 ## Layout
 
-| Path                                      | Purpose                                                    |
-| ----------------------------------------- | ---------------------------------------------------------- |
-| `src/pages/`                              | Routes: English home at `/`, `404`                         |
-| `src/components/`, `src/layouts/`         | Page sections and the shared page shell                    |
-| `src/content/services.json`               | Public services on the homepage                            |
-| `src/content.config.ts`                   | Service schema                                             |
-| `src/data/services.ts`                    | Service loading, path conflict check, sorting              |
-| `src/data/profile.ts`                     | Name and profile links                                     |
-| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts |
-| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                      |
-| `docs/roadmap.md`                         | Proposed content and design directions                     |
+| Path                                      | Purpose                                                      |
+| ----------------------------------------- | ------------------------------------------------------------ |
+| `src/pages/`                              | Routes: home at `/`, posts at `/posts/`, `404`               |
+| `src/components/`, `src/layouts/`         | Page sections and the shared page shell                      |
+| `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md) |
+| `src/content.config.ts`                   | Service and post schemas                                     |
+| `src/data/services.ts`                    | Service loading, path conflict check, sorting                |
+| `src/data/posts.ts`                       | Post loading, draft filtering, date format                   |
+| `src/data/profile.ts`                     | Name, profile links, contact email                           |
+| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts   |
+| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                        |
+| `docs/roadmap.md`                         | Proposed content and design directions                       |
 
 ## Rules
 
@@ -40,7 +41,7 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as
-  `/name/` and must not be `/en/` or `/_astro/`.
+  `/name/` and must not be `/en/`, `/posts/`, or `/_astro/`.
 - UI uses Material UI components and design; hand-build only what it cannot cover, in the same
   style.
 - Material UI injects runtime styles, so the CSP may allow `'unsafe-inline'` in `style-src`.
