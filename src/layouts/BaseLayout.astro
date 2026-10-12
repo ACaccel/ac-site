@@ -1,14 +1,17 @@
 ---
 import '../styles/global.css';
+import { profile } from '../data/profile';
 
 interface Props {
   title: string;
   description: string;
   /** Error pages are served at arbitrary URLs, so they must not claim a canonical URL. */
   noindex?: boolean;
+  /** Open Graph type; posts use `article`. */
+  ogType?: 'website' | 'article';
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, ogType = 'website' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -20,7 +23,25 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${profile.name} 的文章`}
+      href="/rss.xml"
+    />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="canonical" href={canonical} />
+        <meta property="og:url" content={canonical} />
+      </>
+    )}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:locale" content="zh_TW" />
     <title>{title}</title>
   </head>
   <body>

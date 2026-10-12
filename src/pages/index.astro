@@ -1,5 +1,16 @@
 ---
-import HomePage from '../components/HomePage.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import HomePage from '../components/HomePage';
+import { profile } from '../data/profile';
+import { site } from '../data/site';
+import { getPosts, toPostSummary } from '../data/posts';
+import { getServices } from '../data/services';
+
+const recentPostCount = 3;
+const posts = (await getPosts()).slice(0, recentPostCount).map(toPostSummary);
+const services = await getServices();
 ---
 
-<HomePage />
+<PageLayout title={profile.name} description={site.description}>
+  <HomePage posts={posts} services={services} />
+</PageLayout>

@@ -24,4 +24,14 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { services, posts };
+const now = defineCollection({
+  loader: glob({ pattern: 'now.md', base: './src/content' }),
+  schema: z.strictObject({
+    /** Shown on the homepage card. */
+    summary: z.string().min(1),
+    updated: z.coerce.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { services, posts, now };

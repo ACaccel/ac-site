@@ -1,14 +1,20 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
 export default defineConfig({
   site: 'https://acserver.csie.org',
   trailingSlash: 'always',
+  integrations: [react()],
   build: {
-    // External stylesheets keep the CSP free of 'unsafe-inline'.
+    // Keep Astro's CSS in cacheable external files.
     inlineStylesheets: 'never',
   },
+  vite: {
+    // Inlined scripts or data: URIs would be blocked by the CSP.
+    build: { assetsInlineLimit: 0 },
+  },
   markdown: {
-    // Prism marks tokens with classes; Shiki's inline styles would be blocked by the CSP.
+    // Prism marks tokens with classes, colored in global.css to match the theme.
     syntaxHighlight: 'prism',
   },
 });

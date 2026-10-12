@@ -5,7 +5,8 @@ Authoritative project rule set; `CLAUDE.md` points here.
 ## Stack
 
 - Static personal website for `https://acserver.csie.org/`, served directly by the host's Nginx.
-- Astro and TypeScript; Prettier, ESLint, and `astro check`.
+- Astro and TypeScript; UI components are React with Material UI (Emotion), rendered at build
+  time only. Prettier, ESLint, and `astro check`.
 - Node 24 LTS from the project-local conda environment in `.conda/`; do not use the system Node.
 
 ## Setup and validation
@@ -15,7 +16,7 @@ CONDA_EXE=~/miniforge3/bin/conda scripts/setup-env.sh   # create .conda and run 
 export PATH="$PWD/.conda/bin:$PATH"
 npm run dev      # local dev server
 npm run format   # apply Prettier
-npm run check    # format check, lint, type check, deploy tests, build
+npm run check    # format check, lint, type check, deploy tests, build, dist CSP check
 ```
 
 Deployment and rollback: [docs/deployment.md](docs/deployment.md).
@@ -24,13 +25,14 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 | Path                                      | Purpose                                                      |
 | ----------------------------------------- | ------------------------------------------------------------ |
-| `src/pages/`                              | Routes: home at `/`, posts at `/posts/`, `404`               |
-| `src/components/`, `src/layouts/`         | Page sections and the shared page shell                      |
+| `src/pages/`                              | Routes; see [docs/writing.md](docs/writing.md) for each page |
+| `src/layouts/`                            | `BaseLayout` (head, meta) and `PageLayout` (page shell)      |
+| `src/components/`                         | React components; `PageShell` holds the app bar and footer   |
+| `src/theme/`                              | MUI theme and the `ThemeRoot` wrapper every root needs       |
 | `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md) |
-| `src/content.config.ts`                   | Service and post schemas                                     |
-| `src/data/services.ts`                    | Service loading, path conflict check, sorting                |
-| `src/data/posts.ts`                       | Post loading, draft filtering, date format                   |
-| `src/data/profile.ts`                     | Name, profile links, contact email                           |
+| `src/content.config.ts`                   | Content schemas                                              |
+| `src/data/`                               | Content loading; `profile.ts` and `site.ts` hold site data   |
+| `scripts/check-dist.py`                   | Fails the build output on inline script the CSP would block  |
 | `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts   |
 | `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                        |
 | `docs/roadmap.md`                         | Proposed content and design directions                       |
@@ -42,11 +44,13 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as
-  `/name/` and must not be `/en/`, `/posts/`, or `/_astro/`.
+  `/name/` and must not be a site path (`reservedPaths` in `src/data/services.ts`).
 - UI uses Material UI components and design; hand-build only what it cannot cover, in the same
-  style.
-- Material UI injects runtime styles, so the CSP may allow `'unsafe-inline'` in `style-src`.
-  Scripts stay strict: no hand-written inline scripts and no `'unsafe-inline'` in `script-src`;
-  allow framework-generated inline scripts by hash.
+  style. Components never hydrate (no `client:*` directives); small browser behavior goes in a
+  bundled `<script>` in an `.astro` file. Every React component rendered from Astro wraps its
+  content in `ThemeRoot`.
+- Material UI renders inline `<style>` elements, so the CSP allows `'unsafe-inline'` in
+  `style-src`. Scripts stay strict: `script-src 'self'` only, no inline scripts or handlers
+  (`npm run test:dist` enforces this).
 - Output stays fully static; the site runs no server process.
 - Never edit other projects' managed blocks in the shared Nginx site file.

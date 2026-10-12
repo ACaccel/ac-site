@@ -4,10 +4,10 @@ Site text lives in Markdown files under `src/content/`; editing them needs no co
 
 | File                        | Shown as                                    |
 | --------------------------- | ------------------------------------------- |
-| `src/content/about.md`      | Introduction on the homepage                |
 | `src/content/posts/<id>.md` | Post at `/posts/<id>/`, listed newest first |
+| `src/content/now.md`        | Now page at `/now/` and the homepage card   |
 | `src/content/services.json` | Services on the homepage                    |
-| `src/data/profile.ts`       | Name, profile links, and contact email      |
+| `src/data/profile.ts`       | Name, tagline, profile links, contact email |
 
 ## Posts
 
@@ -27,6 +27,12 @@ Front matter fields:
 
 The build fails on a missing or misspelled field, so a broken post never goes live. Code blocks
 get syntax highlighting when they name a language, such as ` ```ts `.
+
+## Now
+
+`now.md` front matter: `summary` (one or two sentences for the homepage card), `updated`
+(`YYYY-MM-DD`), and `draft`. While `draft: true`, the page, the homepage card, and the footer
+link stay out of the deployed site.
 
 ## Preview and publish
 

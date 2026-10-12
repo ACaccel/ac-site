@@ -1,12 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import NotFound from '../components/NotFound';
+import { profile } from '../data/profile';
 ---
 
-<BaseLayout title="404 | ACaccel" description="找不到頁面" noindex>
-  <main class="not-found">
-    <h1>404</h1>
-    <p>
-      找不到這個頁面。<a href="/">回到首頁</a>
-    </p>
-  </main>
-</BaseLayout>
+<PageLayout title={`404 | ${profile.name}`} description="找不到頁面" width="narrow" noindex>
+  <NotFound />
+</PageLayout>

@@ -1,17 +1,18 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostList from '../../components/PostList.astro';
-import SiteHeader from '../../components/SiteHeader.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHeader from '../../components/PageHeader';
+import PostList from '../../components/PostList';
 import { profile } from '../../data/profile';
-import { getPosts } from '../../data/posts';
+import { getPosts, toPostSummary } from '../../data/posts';
 
-const posts = await getPosts();
+const posts = (await getPosts()).map(toPostSummary);
 ---
 
-<BaseLayout title={`文章 | ${profile.name}`} description={`${profile.name} 的文章。`}>
-  <SiteHeader />
-  <main>
-    <h1 class="page-title">文章</h1>
-    {posts.length > 0 ? <PostList posts={posts} /> : <p class="muted">目前還沒有文章。</p>}
-  </main>
-</BaseLayout>
+<PageLayout
+  title={`文章 | ${profile.name}`}
+  description={`${profile.name} 的文章。`}
+  width="narrow"
+>
+  <PageHeader title="文章" />
+  <PostList posts={posts} />
+</PageLayout>

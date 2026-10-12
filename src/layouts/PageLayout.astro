@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageShell, { type PageWidth } from '../components/PageShell';
+import { getNow } from '../data/now';
+
+interface Props {
+  title: string;
+  description: string;
+  width?: PageWidth;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+}
+
+const { width = 'wide', ...head } = Astro.props;
+const now = await getNow();
+---
+
+<BaseLayout {...head}>
+  <PageShell currentPath={Astro.url.pathname} width={width} showNow={now !== undefined}>
+    <slot />
+  </PageShell>
+</BaseLayout>
