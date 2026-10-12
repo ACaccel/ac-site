@@ -34,7 +34,7 @@ bash deploy/deploy.sh
    | Request              | Expected |
    | -------------------- | -------- |
    | `https://<host>/`    | 200      |
-   | `https://<host>/en/` | 200      |
+   | `https://<host>/en/` | 301      |
    | Unknown HTTPS path   | 404      |
    | `http://<host>/`     | 308      |
 

@@ -156,7 +156,7 @@ expect_status() {
   return 1
 }
 expect_status 200 "https://$host/" 443 "$https_address"
-expect_status 200 "https://$host/en/" 443 "$https_address"
+expect_status 301 "https://$host/en/" 443 "$https_address"
 expect_status 404 "https://$host/ac-site-deploy-check-$release/" 443 "$https_address"
 expect_status 308 "http://$host/" 80 "$http_address"
 trap - ERR INT HUP TERM

@@ -22,22 +22,21 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 ## Layout
 
-| Path                                      | Purpose                                                      |
-| ----------------------------------------- | ------------------------------------------------------------ |
-| `src/pages/`                              | Routes: Traditional Chinese at `/`, English at `/en/`, `404` |
-| `src/components/`, `src/layouts/`         | Page sections and the shared page shell                      |
-| `src/content/services.json`               | Public services on the homepage                              |
-| `src/content.config.ts`                   | Service schema                                               |
-| `src/data/services.ts`                    | Service loading, path conflict check, sorting                |
-| `src/data/profile.ts`                     | Name and profile links                                       |
-| `src/i18n/ui.ts`                          | Interface strings for both languages                         |
-| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts   |
-| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                        |
-| `docs/roadmap.md`                         | Proposed content and design directions                       |
+| Path                                      | Purpose                                                    |
+| ----------------------------------------- | ---------------------------------------------------------- |
+| `src/pages/`                              | Routes: English home at `/`, `404`                         |
+| `src/components/`, `src/layouts/`         | Page sections and the shared page shell                    |
+| `src/content/services.json`               | Public services on the homepage                            |
+| `src/content.config.ts`                   | Service schema                                             |
+| `src/data/services.ts`                    | Service loading, path conflict check, sorting              |
+| `src/data/profile.ts`                     | Name and profile links                                     |
+| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts |
+| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                      |
+| `docs/roadmap.md`                         | Proposed content and design directions                     |
 
 ## Rules
 
-- Every page exists in both languages with equivalent content.
+- Content is English-only; the old `/en/` path redirects to `/` in Nginx.
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as

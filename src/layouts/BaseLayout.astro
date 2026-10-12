@@ -1,6 +1,4 @@
 ---
-import { getAbsoluteLocaleUrl } from 'astro:i18n';
-import { defaultLocale, isLocale, locales } from '../i18n/ui';
 import '../styles/global.css';
 
 interface Props {
@@ -11,28 +9,18 @@ interface Props {
 }
 
 const { title, description, noindex = false } = Astro.props;
-const lang = isLocale(Astro.currentLocale) ? Astro.currentLocale : defaultLocale;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    {noindex ? (
-      <meta name="robots" content="noindex" />
-    ) : (
-      <>
-        <link rel="canonical" href={getAbsoluteLocaleUrl(lang)} />
-        {locales.map((locale) => (
-          <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale)} />
-        ))}
-        <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale)} />
-      </>
-    )}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <title>{title}</title>
   </head>
   <body>

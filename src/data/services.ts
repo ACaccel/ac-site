@@ -2,7 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Service = CollectionEntry<'services'>['data'];
 
-// Paths that belong to this site and must not be claimed by a service.
+// Paths that belong to this site and must not be claimed by a service; /en/ redirects to /.
 const reservedPaths = new Set(['/en/', '/_astro/']);
 
 export async function getServices(): Promise<Service[]> {

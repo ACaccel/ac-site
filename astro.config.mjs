@@ -7,11 +7,4 @@ export default defineConfig({
     // External stylesheets keep the CSP free of 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
-  i18n: {
-    locales: ['zh-TW', 'en'],
-    defaultLocale: 'zh-TW',
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
 });

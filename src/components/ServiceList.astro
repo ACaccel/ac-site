@@ -1,14 +1,6 @@
 ---
 import { getServices } from '../data/services';
-import type { Locale } from '../i18n/ui';
-import { useTranslations } from '../i18n/ui';
 
-interface Props {
-  locale: Locale;
-}
-
-const { locale } = Astro.props;
-const t = useTranslations(locale);
 const services = await getServices();
 ---
 
@@ -18,14 +10,14 @@ const services = await getServices();
       <h3>
         <a href={service.path}>{service.name}</a>
       </h3>
-      <p>{service.description[locale]}</p>
+      <p>{service.description}</p>
       <p class="service-meta">
         <code>{service.path}</code>
         {service.source && (
           <>
             {' · '}
             <a href={service.source} rel="noopener">
-              {t('services.source')}
+              Source
             </a>
           </>
         )}

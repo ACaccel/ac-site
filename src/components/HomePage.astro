@@ -1,38 +1,31 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceList from './ServiceList.astro';
 import { profile } from '../data/profile';
-import { defaultLocale, isLocale, useTranslations } from '../i18n/ui';
-
-const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : defaultLocale;
-const otherLocale = locale === 'en' ? 'zh-TW' : 'en';
-const t = useTranslations(locale);
 ---
 
-<BaseLayout title={profile.name} description={t('site.description')}>
+<BaseLayout
+  title={profile.name}
+  description="ACaccel's personal website and the services hosted on acserver.csie.org."
+>
   <header class="site-header">
     <span class="site-name">{profile.name}</span>
-    <a
-      class="lang-switch"
-      href={getRelativeLocaleUrl(otherLocale)}
-      hreflang={otherLocale}
-      lang={otherLocale}
-    >
-      {t('lang.switch')}
-    </a>
   </header>
   <main>
     <section class="intro">
       <h1>{profile.name}</h1>
-      <p>{t('intro.body')}</p>
+      <p>
+        Based at the Department of Electrical Engineering, National Taiwan University, working on
+        software development and server operations. This site lists the public services hosted on
+        this server.
+      </p>
     </section>
     <section aria-labelledby="services-heading">
-      <h2 id="services-heading">{t('services.heading')}</h2>
-      <ServiceList locale={locale} />
+      <h2 id="services-heading">Services</h2>
+      <ServiceList />
     </section>
     <section aria-labelledby="links-heading">
-      <h2 id="links-heading">{t('links.heading')}</h2>
+      <h2 id="links-heading">Links</h2>
       <ul class="links">
         {profile.links.map((link) => (
           <li>
