@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import PageLayout from '../../../layouts/PageLayout.astro';
 import AlbumDetail from '../../../components/AlbumDetail';
-import { profile } from '../../../data/profile';
+import { pageTitle } from '../../../data/site';
 import { formatDate, isoDate } from '../../../data/dates';
 import { getAlbums, type Album } from '../../../data/hobbies';
 import { largeImage, responsiveImage } from '../../../data/images';
@@ -30,7 +30,7 @@ const photos = await Promise.all(
 );
 ---
 
-<PageLayout title={`${title} | ${profile.name}`} description={description}>
+<PageLayout title={pageTitle(title)} description={description}>
   <AlbumDetail
     title={title}
     description={description}

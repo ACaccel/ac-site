@@ -11,6 +11,7 @@ import ThemeRoot from '../theme/ThemeRoot';
 import Prose from './Prose';
 import type { ProjectSummary } from '../data/projects';
 import type { Service } from '../data/services';
+import { fill, text } from '../data/text';
 
 interface Props {
   project: ProjectSummary;
@@ -30,7 +31,7 @@ export default function ProjectDetail({ project, links, service, children }: Pro
           {project.summary}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          {project.period} · 角色：{project.role}
+          {project.period} · {fill(text.projects.role, { role: project.role })}
         </Typography>
         {project.stack.length > 0 && (
           <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', gap: 0.75, mt: 1.5 }}>
@@ -43,7 +44,7 @@ export default function ProjectDetail({ project, links, service, children }: Pro
           <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', gap: 1.5, mt: 3 }}>
             {openService && (
               <Button variant="contained" href={service.path} endIcon={<ArrowOutward />}>
-                開啟服務
+                {text.projects.open}
               </Button>
             )}
             {links.map((link) => (

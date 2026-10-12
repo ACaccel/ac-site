@@ -19,6 +19,7 @@ import type { HobbyCategory } from '../data/hobbies';
 import type { PostSummary } from '../data/posts';
 import type { ProjectSummary } from '../data/projects';
 import type { Service } from '../data/services';
+import { text } from '../data/text';
 
 interface Props {
   hobbies: HobbyCategory[];
@@ -58,11 +59,11 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
               href={`mailto:${profile.email}`}
               startIcon={<MailOutlined />}
             >
-              Email
+              {text.home.emailButton}
             </Button>
           )}
           <Button href="/about/" endIcon={<ArrowForward />}>
-            關於我
+            {text.home.aboutButton}
           </Button>
         </Stack>
       </Box>
@@ -77,8 +78,8 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
         <Box component="section" aria-labelledby="posts-heading" sx={sectionSx}>
           <SectionHeader
             id="posts-heading"
-            title="最新文章"
-            more={{ href: '/posts/', label: '所有文章' }}
+            title={text.home.posts.title}
+            more={{ href: '/posts/', label: text.home.posts.more }}
           />
           <CardGrid>
             {posts.map((post) => (
@@ -93,8 +94,8 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
       <Box component="section" aria-labelledby="hobbies-heading" sx={sectionSx}>
         <SectionHeader
           id="hobbies-heading"
-          title="興趣"
-          more={{ href: '/hobbies/', label: '興趣專區' }}
+          title={text.home.hobbies.title}
+          more={{ href: '/hobbies/', label: text.home.hobbies.more }}
         />
         <CardGrid>
           {hobbies.map((category) => (
@@ -109,8 +110,8 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
         <Box component="section" aria-labelledby="projects-heading" sx={sectionSx}>
           <SectionHeader
             id="projects-heading"
-            title="精選作品"
-            more={{ href: '/projects/', label: '所有作品' }}
+            title={text.home.projects.title}
+            more={{ href: '/projects/', label: text.home.projects.more }}
           />
           <CardGrid columns={2}>
             {projects.map((project) => (
@@ -125,8 +126,8 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
       <Box component="section" aria-labelledby="services-heading" sx={sectionSx}>
         <SectionHeader
           id="services-heading"
-          title="服務"
-          more={{ href: '/services/', label: '所有服務' }}
+          title={text.home.services.title}
+          more={{ href: '/services/', label: text.home.services.more }}
         />
         <CardGrid>
           {services.map((service) => (

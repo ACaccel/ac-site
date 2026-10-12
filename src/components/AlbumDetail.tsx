@@ -7,6 +7,7 @@ import ThemeRoot from '../theme/ThemeRoot';
 import PageHeader from './PageHeader';
 import Prose from './Prose';
 import type { ResponsiveImage } from '../data/images';
+import { text } from '../data/text';
 
 export interface AlbumPhoto {
   image: ResponsiveImage;
@@ -32,7 +33,7 @@ export default function AlbumDetail(props: Props) {
   return (
     <ThemeRoot>
       <Button href="/hobbies/photos/" startIcon={<ArrowBack />} sx={{ mb: 2, ml: -1 }}>
-        所有相簿
+        {text.hobbies.photos.back}
       </Button>
       <PageHeader title={title} description={description}>
         <time dateTime={dateISO}>{date}</time>

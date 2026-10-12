@@ -2,17 +2,14 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import AboutPage from '../components/AboutPage';
 import { Content as About } from '../content/about.md';
-import { profile } from '../data/profile';
+import { pageTitle } from '../data/site';
+import { text } from '../data/text';
 import { getExperience } from '../data/about';
 
 const experience = await getExperience();
 ---
 
-<PageLayout
-  title={`關於我 | ${profile.name}`}
-  description={`${profile.name}：${profile.tagline}`}
-  width="narrow"
->
+<PageLayout title={pageTitle(text.about.title)} description={text.about.description} width="narrow">
   <AboutPage experience={experience}>
     <About />
   </AboutPage>

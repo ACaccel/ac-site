@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import PostArticle from '../../components/PostArticle';
-import { profile } from '../../data/profile';
+import { pageTitle } from '../../data/site';
 import { formatDate, isoDate } from '../../data/dates';
 import { adjacentPosts, getPosts, postHref, readingMinutes, type Post } from '../../data/posts';
 
@@ -26,7 +26,7 @@ const toLink = (entry: Post | undefined) =>
   entry && { href: postHref(entry), title: entry.data.title };
 ---
 
-<PageLayout title={`${title} | ${profile.name}`} description={description} ogType="article">
+<PageLayout title={pageTitle(title)} description={description} ogType="article">
   <PostArticle
     title={title}
     date={formatDate(date)}
@@ -45,6 +45,8 @@ const toLink = (entry: Post | undefined) =>
 
 <script>
   // Copy buttons need the browser, so they are added here instead of in the React markup.
+  // Their labels come from site.yaml through data attributes on the article.
+  const labels = document.querySelector<HTMLElement>('article[data-copy]')?.dataset;
   for (const pre of document.querySelectorAll<HTMLPreElement>('.prose pre')) {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-block';
@@ -52,19 +54,20 @@ const toLink = (entry: Post | undefined) =>
     wrapper.append(pre);
 
     const button = document.createElement('button');
+    const idle = labels?.['copy'] ?? '';
     button.type = 'button';
     button.className = 'copy-button';
-    button.textContent = '複製';
+    button.textContent = idle;
     let reset: number | undefined;
     button.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(pre.querySelector('code')?.innerText ?? pre.innerText);
-        button.textContent = '已複製';
+        button.textContent = labels?.['copied'] ?? idle;
       } catch {
-        button.textContent = '無法複製';
+        button.textContent = labels?.['copyFailed'] ?? idle;
       }
       window.clearTimeout(reset);
-      reset = window.setTimeout(() => (button.textContent = '複製'), 2000);
+      reset = window.setTimeout(() => (button.textContent = idle), 2000);
     });
     wrapper.append(button);
   }

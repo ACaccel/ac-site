@@ -7,6 +7,7 @@ import ThemeRoot from '../theme/ThemeRoot';
 import CardGrid from './CardGrid';
 import EmptyState from './EmptyState';
 import type { ResponsiveImage } from '../data/images';
+import { text } from '../data/text';
 
 export interface AlbumSummary {
   href: string;
@@ -22,7 +23,7 @@ export default function AlbumGrid({ albums }: { albums: AlbumSummary[] }) {
   if (albums.length === 0) {
     return (
       <ThemeRoot>
-        <EmptyState>相簿整理中。</EmptyState>
+        <EmptyState>{text.hobbies.photos.empty}</EmptyState>
       </ThemeRoot>
     );
   }

@@ -1,7 +1,7 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import LogPage from '../../components/LogPage';
-import { profile } from '../../data/profile';
+import { pageTitle } from '../../data/site';
 import { getMediaGroups, hobbyCategory } from '../../data/hobbies';
 import { getPosts, postsWithTag, toPostSummary } from '../../data/posts';
 
@@ -10,7 +10,7 @@ const groups = await getMediaGroups();
 const relatedPosts = postsWithTag(await getPosts(), category.tag).map(toPostSummary);
 ---
 
-<PageLayout title={`${category.title} | ${profile.name}`} description={category.description}>
+<PageLayout title={pageTitle(category.title)} description={category.description}>
   <LogPage
     title={category.title}
     description={category.description}

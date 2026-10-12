@@ -9,12 +9,9 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { Service } from '../data/services';
+import { text } from '../data/text';
 
-const statusChip = {
-  active: { label: '運作中', color: 'success' },
-  beta: { label: '測試中', color: 'warning' },
-  archived: { label: '已封存', color: 'default' },
-} as const;
+const statusColor = { active: 'success', beta: 'warning', archived: 'default' } as const;
 
 interface Props {
   service: Service;
@@ -27,7 +24,6 @@ interface Props {
  * a whole-card link. Render inside a ThemeRoot.
  */
 export default function ServiceCard({ service, detailed = false }: Props) {
-  const status = statusChip[service.status];
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ flexGrow: 1 }}>
@@ -37,7 +33,12 @@ export default function ServiceCard({ service, detailed = false }: Props) {
           <Typography variant="h3" component="h3">
             {service.name}
           </Typography>
-          <Chip size="small" variant="outlined" label={status.label} color={status.color} />
+          <Chip
+            size="small"
+            variant="outlined"
+            label={text.services.status[service.status]}
+            color={statusColor[service.status]}
+          />
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
           {service.description}
@@ -64,12 +65,12 @@ export default function ServiceCard({ service, detailed = false }: Props) {
       <CardActions sx={{ px: 2, pb: 2 }}>
         {service.status !== 'archived' && (
           <Button variant="contained" size="small" href={service.path} endIcon={<ArrowOutward />}>
-            開啟服務
+            {text.services.open}
           </Button>
         )}
         {service.source && (
           <Button size="small" href={service.source} rel="noopener" startIcon={<GitHub />}>
-            原始碼
+            {text.services.source}
           </Button>
         )}
       </CardActions>

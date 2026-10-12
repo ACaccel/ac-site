@@ -3,6 +3,7 @@ import CardGrid from './CardGrid';
 import EmptyState from './EmptyState';
 import ServiceCard from './ServiceCard';
 import type { Service } from '../data/services';
+import { text } from '../data/text';
 
 export default function ServiceList({ services }: { services: Service[] }) {
   return (
@@ -16,7 +17,7 @@ export default function ServiceList({ services }: { services: Service[] }) {
           ))}
         </CardGrid>
       ) : (
-        <EmptyState>目前沒有公開的服務。</EmptyState>
+        <EmptyState>{text.services.empty}</EmptyState>
       )}
     </ThemeRoot>
   );

@@ -11,6 +11,7 @@ import PageHeader from './PageHeader';
 import Prose from './Prose';
 import { profile } from '../data/profile';
 import type { Experience } from '../data/about';
+import { text } from '../data/text';
 
 interface Props {
   experience: Experience[];
@@ -23,13 +24,13 @@ const sectionSx = { mt: 6 };
 export default function AboutPage({ experience, children }: Props) {
   return (
     <ThemeRoot>
-      <PageHeader title="關於我" />
+      <PageHeader title={text.about.title} />
       <Prose>{children}</Prose>
 
       {experience.length > 0 && (
         <Box component="section" aria-labelledby="experience-heading" sx={sectionSx}>
           <Typography variant="h2" id="experience-heading" sx={{ mb: 2 }}>
-            經歷
+            {text.about.experience}
           </Typography>
           <Box component="ol" sx={{ m: 0, p: 0, listStyle: 'none' }}>
             {experience.map((entry) => (
@@ -59,7 +60,7 @@ export default function AboutPage({ experience, children }: Props) {
 
       <Box component="section" aria-labelledby="contact-heading" sx={sectionSx}>
         <Typography variant="h2" id="contact-heading" sx={{ mb: 2 }}>
-          聯絡方式
+          {text.about.contact}
         </Typography>
         <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', gap: 1.5 }}>
           {profile.email && (
@@ -83,9 +84,9 @@ export default function AboutPage({ experience, children }: Props) {
             </Button>
           ))}
         </Stack>
-        {profile.email && (
+        {text.about.cvNote && (
           <Typography color="text.secondary" sx={{ mt: 2 }}>
-            如需完整履歷，歡迎來信索取。
+            {text.about.cvNote}
           </Typography>
         )}
       </Box>

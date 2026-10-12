@@ -32,7 +32,7 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 | `src/theme/`                              | MUI theme and the `ThemeRoot` wrapper every root needs        |
 | `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md)  |
 | `src/content.config.ts`                   | Content schemas                                               |
-| `src/data/`                               | Content loading; `profile.ts` and `site.ts` hold site data    |
+| `src/data/`                               | Content loading; `text.ts` loads and validates `site.yaml`    |
 | `src/integrations/`                       | Build hook removing source images copied into `dist/`         |
 | `scripts/check-dist.py`                   | Fails on inline script or unreferenced images in `dist/`      |
 | `scripts/photos.mjs`                      | Strips photo metadata; `--check` mode runs in `npm run check` |
@@ -44,6 +44,8 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 - Content is Traditional Chinese (Taiwan); an English edition is undecided. The old `/en/` path
   redirects to `/` in Nginx.
+- Every visible text lives in `src/content/` (short texts in `site.yaml`); code reads it through
+  `text` from `src/data/text.ts`. ESLint rejects Chinese text written directly in `src/`.
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as

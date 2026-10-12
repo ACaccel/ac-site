@@ -3,6 +3,7 @@ import CardGrid from './CardGrid';
 import PostCard from './PostCard';
 import SectionHeader from './SectionHeader';
 import { tagHref, type PostSummary } from '../data/posts';
+import { text } from '../data/text';
 
 interface Props {
   posts: PostSummary[];
@@ -17,7 +18,7 @@ export default function RelatedPosts({ posts, tag }: Props) {
     <Box component="section" aria-labelledby="related-heading" sx={{ mt: 8 }}>
       <SectionHeader
         id="related-heading"
-        title="相關文章"
+        title={text.hobbies.relatedPosts}
         more={tag ? { href: tagHref(tag), label: `#${tag}` } : undefined}
       />
       <CardGrid>

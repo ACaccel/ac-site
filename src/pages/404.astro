@@ -1,9 +1,15 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import NotFound from '../components/NotFound';
-import { profile } from '../data/profile';
+import { pageTitle } from '../data/site';
+import { text } from '../data/text';
 ---
 
-<PageLayout title={`404 | ${profile.name}`} description="找不到頁面" width="narrow" noindex>
+<PageLayout
+  title={pageTitle(text.notFound.title)}
+  description={text.notFound.message}
+  width="narrow"
+  noindex
+>
   <NotFound />
 </PageLayout>

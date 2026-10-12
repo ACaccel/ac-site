@@ -2,17 +2,14 @@
 import PageLayout from '../../layouts/PageLayout.astro';
 import PageHeader from '../../components/PageHeader';
 import PostList from '../../components/PostList';
-import { profile } from '../../data/profile';
+import { pageTitle } from '../../data/site';
+import { text } from '../../data/text';
 import { getPosts, getTagCounts, toPostSummary } from '../../data/posts';
 
 const posts = await getPosts();
 ---
 
-<PageLayout
-  title={`文章 | ${profile.name}`}
-  description={`${profile.name} 的文章。`}
-  width="narrow"
->
-  <PageHeader title="文章" />
+<PageLayout title={pageTitle(text.posts.title)} description={text.posts.description} width="narrow">
+  <PageHeader title={text.posts.title} />
   <PostList posts={posts.map(toPostSummary)} tags={getTagCounts(posts)} />
 </PageLayout>

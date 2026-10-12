@@ -1,6 +1,7 @@
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { tagHref, type TagCount } from '../data/posts';
+import { text } from '../data/text';
 
 interface Props {
   tags: TagCount[];
@@ -16,7 +17,7 @@ export default function TagChips({ tags, active, allHref }: Props) {
   return (
     <Stack
       component="nav"
-      aria-label="標籤"
+      aria-label={text.posts.tagsLabel}
       direction="row"
       useFlexGap
       sx={{ flexWrap: 'wrap', gap: 1, mb: 3 }}
@@ -26,7 +27,7 @@ export default function TagChips({ tags, active, allHref }: Props) {
           component="a"
           href={allHref}
           clickable
-          label="全部"
+          label={text.posts.allTags}
           color={active ? 'default' : 'primary'}
           variant={active ? 'outlined' : 'filled'}
         />

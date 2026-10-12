@@ -4,6 +4,7 @@ import EmptyState from './EmptyState';
 import PostCard from './PostCard';
 import TagChips from './TagChips';
 import type { PostSummary, TagCount } from '../data/posts';
+import { text } from '../data/text';
 
 interface Props {
   posts: PostSummary[];
@@ -25,7 +26,7 @@ export default function PostList({ posts, tags = [], activeTag }: Props) {
           ))}
         </Stack>
       ) : (
-        <EmptyState>目前還沒有文章。</EmptyState>
+        <EmptyState>{text.posts.empty}</EmptyState>
       )}
     </ThemeRoot>
   );

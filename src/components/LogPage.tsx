@@ -13,6 +13,7 @@ import PageHeader from './PageHeader';
 import RelatedPosts from './RelatedPosts';
 import type { LogEntry, LogGroup } from '../data/hobbies';
 import type { PostSummary } from '../data/posts';
+import { text } from '../data/text';
 
 interface Props {
   title: string;
@@ -59,12 +60,12 @@ function LogCard({ entry }: { entry: LogEntry }) {
         <CardActions sx={{ px: 2, pb: 2 }}>
           {entry.postHref && (
             <Button size="small" variant="outlined" href={entry.postHref}>
-              閱讀心得
+              {text.hobbies.readPost}
             </Button>
           )}
           {entry.link && (
             <Button size="small" href={entry.link} rel="noopener">
-              相關連結
+              {text.hobbies.link}
             </Button>
           )}
         </CardActions>
@@ -81,7 +82,7 @@ export default function LogPage(props: Props) {
       {groupNav && groups.length > 1 && (
         <Stack
           component="nav"
-          aria-label="分類"
+          aria-label={text.hobbies.groupsLabel}
           direction="row"
           useFlexGap
           sx={{ flexWrap: 'wrap', gap: 1, mb: 2 }}
@@ -98,7 +99,7 @@ export default function LogPage(props: Props) {
           ))}
         </Stack>
       )}
-      {groups.length === 0 && <EmptyState>紀錄整理中。</EmptyState>}
+      {groups.length === 0 && <EmptyState>{text.hobbies.empty}</EmptyState>}
       {groups.map((group) => (
         <Box
           component="section"

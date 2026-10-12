@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
 import { isActiveNav, site } from '../data/site';
 import { profile } from '../data/profile';
+import { text } from '../data/text';
 
 export type PageWidth = 'wide' | 'narrow';
 
@@ -27,10 +28,10 @@ interface Props {
 export default function PageShell({ currentPath, width, showNow, children }: Props) {
   const footerLinks: { label: string; href: string; rel?: string }[] = [
     ...profile.links.map((link) => ({ ...link, rel: 'me noopener' })),
-    ...(profile.email ? [{ label: 'Email', href: `mailto:${profile.email}` }] : []),
-    ...(showNow ? [{ label: '近況', href: '/now/' }] : []),
-    { label: 'RSS', href: '/rss.xml' },
-    { label: '網站原始碼', href: site.sourceUrl, rel: 'noopener' },
+    ...(profile.email ? [{ label: text.footer.email, href: `mailto:${profile.email}` }] : []),
+    ...(showNow ? [{ label: text.footer.now, href: '/now/' }] : []),
+    { label: text.footer.rss, href: '/rss.xml' },
+    { label: text.footer.source, href: site.sourceUrl, rel: 'noopener' },
   ];
 
   return (
@@ -64,7 +65,7 @@ export default function PageShell({ currentPath, width, showNow, children }: Pro
             {/* Five short labels fit on phones, so the nav wraps instead of hiding in a menu. */}
             <Box
               component="nav"
-              aria-label="主要導覽"
+              aria-label={text.nav.label}
               sx={{
                 display: 'flex',
                 gap: 0.5,

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
 import Prose from './Prose';
 import { tagHref } from '../data/posts';
+import { around, fill, text } from '../data/text';
 
 export interface TocHeading {
   depth: number;
@@ -41,6 +42,7 @@ export const articleMaxWidth = 712;
 
 export default function PostArticle(props: Props) {
   const { title, date, dateISO, updated, updatedISO, minutes, tags, toc, older, newer } = props;
+  const updatedText = around(text.posts.updated, 'date');
   return (
     <ThemeRoot>
       <Box
@@ -54,18 +56,27 @@ export default function PostArticle(props: Props) {
           },
         }}
       >
-        <Box component="article" sx={{ minWidth: 0 }}>
+        <Box
+          component="article"
+          // Labels for the copy buttons that the page script adds to code blocks.
+          data-copy={text.posts.copy}
+          data-copied={text.posts.copied}
+          data-copy-failed={text.posts.copyFailed}
+          sx={{ minWidth: 0 }}
+        >
           <Box component="header" sx={{ mb: 4 }}>
             <Typography variant="h1">{title}</Typography>
             <Typography color="text.secondary" sx={{ mt: 1.5 }}>
               <time dateTime={dateISO}>{date}</time>
               {updated && updatedISO && (
                 <>
-                  {' · 更新於 '}
+                  {' · '}
+                  {updatedText[0]}
                   <time dateTime={updatedISO}>{updated}</time>
+                  {updatedText[1]}
                 </>
               )}
-              {` · 約 ${minutes} 分鐘`}
+              {` · ${fill(text.posts.readingTime, { minutes })}`}
             </Typography>
             {tags.length > 0 && (
               <Stack direction="row" useFlexGap sx={{ flexWrap: 'wrap', gap: 1, mt: 2 }}>
@@ -87,7 +98,7 @@ export default function PostArticle(props: Props) {
           {(older || newer) && (
             <Box
               component="nav"
-              aria-label="其他文章"
+              aria-label={text.posts.otherPosts}
               sx={{
                 display: 'grid',
                 gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
@@ -109,7 +120,7 @@ export default function PostArticle(props: Props) {
                         color="text.secondary"
                         sx={{ display: 'block' }}
                       >
-                        上一篇
+                        {text.posts.older}
                       </Typography>
                       {older.title}
                     </span>
@@ -127,7 +138,7 @@ export default function PostArticle(props: Props) {
                         color="text.secondary"
                         sx={{ display: 'block' }}
                       >
-                        下一篇
+                        {text.posts.newer}
                       </Typography>
                       {newer.title}
                     </span>
@@ -140,7 +151,7 @@ export default function PostArticle(props: Props) {
         {toc.length > 0 && (
           <Box
             component="nav"
-            aria-label="文章目錄"
+            aria-label={text.posts.toc}
             sx={{
               display: { xs: 'none', lg: 'block' },
               position: 'sticky',
@@ -151,7 +162,7 @@ export default function PostArticle(props: Props) {
             }}
           >
             <Typography variant="overline" color="text.secondary">
-              目錄
+              {text.posts.toc}
             </Typography>
             <Box component="ul" sx={{ m: 0, p: 0, listStyle: 'none' }}>
               {toc.map((heading) => (

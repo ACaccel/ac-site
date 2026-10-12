@@ -1,7 +1,8 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import HobbyHub from '../../components/HobbyHub';
-import { profile } from '../../data/profile';
+import { pageTitle } from '../../data/site';
+import { text } from '../../data/text';
 import { getHobbyCounts, hobbyCategories } from '../../data/hobbies';
 import { getPosts, toPostSummary } from '../../data/posts';
 
@@ -14,9 +15,6 @@ const posts = (await getPosts())
 const counts = await getHobbyCounts();
 ---
 
-<PageLayout
-  title={`興趣 | ${profile.name}`}
-  description={`${profile.name} 的遊戲、閱讀、影劇與攝影紀錄。`}
->
+<PageLayout title={pageTitle(text.hobbies.title)} description={text.hobbies.description}>
   <HobbyHub categories={hobbyCategories} counts={counts} posts={posts} />
 </PageLayout>

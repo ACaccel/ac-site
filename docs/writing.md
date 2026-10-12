@@ -1,19 +1,30 @@
 # Writing content
 
-Site text lives in Markdown files under `src/content/`; editing them needs no code changes.
+Everything visitors read lives in `src/content/`; editing it needs no code changes.
 
-| File                           | Shown as                                                      |
-| ------------------------------ | ------------------------------------------------------------- |
-| `src/content/posts/<id>.md`    | Post at `/posts/<id>/`, listed newest first                   |
-| `src/content/now.md`           | Now page at `/now/` and the homepage card                     |
-| `src/content/about.md`         | Introduction on `/about/`                                     |
-| `src/content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)          |
-| `src/content/games.yaml`       | Games on `/hobbies/games/`                                    |
-| `src/content/media.yaml`       | Books, anime, dramas on `/hobbies/media/`                     |
-| `src/content/albums/<id>/`     | Album at `/hobbies/photos/<id>/`                              |
-| `src/content/services.json`    | Services on `/services/` and the homepage                     |
-| `src/content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage |
-| `src/data/profile.ts`          | Name, tagline, profile links, contact email                   |
+| File                           | Shown as                                                          |
+| ------------------------------ | ----------------------------------------------------------------- |
+| `src/content/site.yaml`        | All short texts: name, links, navigation, titles, buttons, labels |
+| `src/content/posts/<id>.md`    | Post at `/posts/<id>/`, listed newest first                       |
+| `src/content/now.md`           | Now page at `/now/` and the homepage card                         |
+| `src/content/about.md`         | Introduction on `/about/`                                         |
+| `src/content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)              |
+| `src/content/games.yaml`       | Games on `/hobbies/games/`                                        |
+| `src/content/media.yaml`       | Books, anime, dramas on `/hobbies/media/`                         |
+| `src/content/albums/<id>/`     | Album at `/hobbies/photos/<id>/`                                  |
+| `src/content/services.json`    | Services on `/services/` and the homepage                         |
+| `src/content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage     |
+
+## Short texts
+
+`site.yaml` is grouped by page, and its header comment explains the rules:
+
+- Keep placeholders such as `{count}` or `{date}`; the site fills them in. `{name}` works
+  anywhere and becomes `profile.name`.
+- Texts marked optional, such as `about.cvNote` or `profile.email`, can be left empty (`''`) to
+  hide them.
+- A missing key, an unknown key, or a dropped placeholder fails the build with the exact path,
+  such as `posts.tagCount: Keep the placeholders {count}`.
 
 ## Posts
 

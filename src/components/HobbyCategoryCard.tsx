@@ -16,7 +16,7 @@ const icons: Record<HobbyCategoryId, typeof SportsEsports> = {
 
 interface Props {
   category: HobbyCategory;
-  /** Entry count, such as "3 筆紀錄"; omitted when not set. */
+  /** Entry count text; omitted when not set. */
   countLabel?: string | undefined;
 }
 

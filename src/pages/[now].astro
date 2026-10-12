@@ -4,7 +4,8 @@ import { render } from 'astro:content';
 import PageLayout from '../layouts/PageLayout.astro';
 import PageHeader from '../components/PageHeader';
 import Prose from '../components/Prose';
-import { profile } from '../data/profile';
+import { pageTitle } from '../data/site';
+import { around, text } from '../data/text';
 import { formatDate, isoDate } from '../data/dates';
 import { getNow, type Now } from '../data/now';
 
@@ -20,11 +21,14 @@ interface Props {
 
 const { now } = Astro.props;
 const { Content } = await render(now);
+const updatedText = around(text.now.updated, 'date');
 ---
 
-<PageLayout title={`近況 | ${profile.name}`} description={now.data.summary} width="narrow">
-  <PageHeader title="近況" description={now.data.summary}>
-    更新於 <time datetime={isoDate(now.data.updated)}>{formatDate(now.data.updated)}</time>
+<PageLayout title={pageTitle(text.now.title)} description={now.data.summary} width="narrow">
+  <PageHeader title={text.now.title} description={now.data.summary}>
+    {updatedText[0]}
+    <time datetime={isoDate(now.data.updated)}>{formatDate(now.data.updated)}</time>
+    {updatedText[1]}
   </PageHeader>
   <Prose>
     <Content />

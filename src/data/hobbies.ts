@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { formatDate, isoDate } from './dates';
 import { getPosts, postHref, type Post } from './posts';
+import { text } from './text';
 
 export type HobbyCategoryId = 'games' | 'media' | 'photos';
 
@@ -16,22 +17,22 @@ export interface HobbyCategory {
 export const hobbyCategories: HobbyCategory[] = [
   {
     id: 'games',
-    title: '遊戲',
-    description: '玩過與正在玩的遊戲，附上簡短心得。',
+    title: text.hobbies.games.title,
+    description: text.hobbies.games.description,
     href: '/hobbies/games/',
     tag: 'games',
   },
   {
     id: 'media',
-    title: '閱讀／動畫／影劇',
-    description: '書、動畫與影劇的紀錄和短評。',
+    title: text.hobbies.media.title,
+    description: text.hobbies.media.description,
     href: '/hobbies/media/',
     tag: 'media',
   },
   {
     id: 'photos',
-    title: '攝影／旅行',
-    description: '旅行紀錄與照片。',
+    title: text.hobbies.photos.title,
+    description: text.hobbies.photos.description,
     href: '/hobbies/photos/',
     tag: 'travel',
   },
@@ -113,68 +114,57 @@ function toLogEntry(
   };
 }
 
-const gameStatuses = {
-  playing: { label: '在玩', color: 'primary' },
-  finished: { label: '玩完', color: 'success' },
-  paused: { label: '擱置', color: 'default' },
-} as const;
+const statusColors = {
+  playing: 'primary',
+  'in-progress': 'primary',
+  finished: 'success',
+  paused: 'default',
+} as const satisfies Record<string, StatusColor>;
+
+const gameStatuses = (['playing', 'finished', 'paused'] as const).map((status) => ({
+  status,
+  label: text.hobbies.games.status[status],
+  color: statusColors[status],
+}));
 
 /** Games grouped by status in display order; empty groups are dropped. */
 export async function getGameGroups(): Promise<LogGroup[]> {
   const games = (await getCollection('games')).map((entry) => entry.data).sort(byUpdated);
   const { posts, allPostIds } = await loadPosts();
-  return (Object.keys(gameStatuses) as (keyof typeof gameStatuses)[])
+  return gameStatuses
     .map((status) => ({
-      id: status,
-      title: gameStatuses[status].label,
+      id: status.status,
+      title: status.label,
       entries: games
-        .filter((game) => game.status === status)
+        .filter((game) => game.status === status.status)
         .map((game) =>
-          toLogEntry(
-            game,
-            gameStatuses[status],
-            game.platform,
-            resolvePost(game, posts, allPostIds),
-          ),
+          toLogEntry(game, status, game.platform, resolvePost(game, posts, allPostIds)),
         ),
     }))
     .filter((group) => group.entries.length > 0);
 }
 
-const mediaTypes = { book: '書', anime: '動畫', drama: '影劇' } as const;
-
-const mediaStatuses = {
-  book: {
-    'in-progress': { label: '閱讀中', color: 'primary' },
-    finished: { label: '讀完', color: 'success' },
-    paused: { label: '擱置', color: 'default' },
-  },
-  watch: {
-    'in-progress': { label: '觀看中', color: 'primary' },
-    finished: { label: '看完', color: 'success' },
-    paused: { label: '擱置', color: 'default' },
-  },
-} as const;
-
+const mediaTypes = ['book', 'anime', 'drama'] as const;
 const mediaStatusOrder = ['in-progress', 'finished', 'paused'] as const;
 
 /** Media grouped by type; in progress first within each type. Empty groups are dropped. */
 export async function getMediaGroups(): Promise<LogGroup[]> {
   const media = (await getCollection('media')).map((entry) => entry.data).sort(byUpdated);
   const { posts, allPostIds } = await loadPosts();
-  return (Object.keys(mediaTypes) as (keyof typeof mediaTypes)[])
+  return mediaTypes
     .map((type) => {
-      const statuses = mediaStatuses[type === 'book' ? 'book' : 'watch'];
+      // Books are read; anime and dramas are watched, so their status words differ.
+      const labels = text.hobbies.media.status[type === 'book' ? 'book' : 'watch'];
       return {
         id: type,
-        title: mediaTypes[type],
+        title: text.hobbies.media.types[type],
         entries: media
           .filter((item) => item.type === type)
           .sort((a, b) => mediaStatusOrder.indexOf(a.status) - mediaStatusOrder.indexOf(b.status))
           .map((item) =>
             toLogEntry(
               item,
-              statuses[item.status],
+              { label: labels[item.status], color: statusColors[item.status] },
               item.creator,
               resolvePost(item, posts, allPostIds),
             ),

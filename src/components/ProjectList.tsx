@@ -3,6 +3,7 @@ import CardGrid from './CardGrid';
 import EmptyState from './EmptyState';
 import ProjectCard from './ProjectCard';
 import type { ProjectSummary } from '../data/projects';
+import { text } from '../data/text';
 
 export default function ProjectList({ projects }: { projects: ProjectSummary[] }) {
   return (
@@ -16,7 +17,7 @@ export default function ProjectList({ projects }: { projects: ProjectSummary[] }
           ))}
         </CardGrid>
       ) : (
-        <EmptyState>作品介紹準備中。</EmptyState>
+        <EmptyState>{text.projects.empty}</EmptyState>
       )}
     </ThemeRoot>
   );

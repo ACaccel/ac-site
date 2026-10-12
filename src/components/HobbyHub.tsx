@@ -5,6 +5,7 @@ import PageHeader from './PageHeader';
 import RelatedPosts from './RelatedPosts';
 import type { HobbyCategory, HobbyCategoryId } from '../data/hobbies';
 import type { PostSummary } from '../data/posts';
+import { fill, text } from '../data/text';
 
 interface Props {
   categories: HobbyCategory[];
@@ -15,7 +16,7 @@ interface Props {
 export default function HobbyHub({ categories, counts, posts }: Props) {
   return (
     <ThemeRoot>
-      <PageHeader title="興趣" description="工作之外的紀錄：遊戲、閱讀與影劇、攝影與旅行。" />
+      <PageHeader title={text.hobbies.title} description={text.hobbies.description} />
       <CardGrid>
         {categories.map((category) => (
           <li key={category.id}>
@@ -23,7 +24,12 @@ export default function HobbyHub({ categories, counts, posts }: Props) {
               category={category}
               countLabel={
                 counts[category.id] > 0
-                  ? `${counts[category.id]} ${category.id === 'photos' ? '本相簿' : '筆紀錄'}`
+                  ? fill(
+                      category.id === 'photos'
+                        ? text.hobbies.photos.albumCount
+                        : text.hobbies.entryCount,
+                      { count: counts[category.id] },
+                    )
                   : undefined
               }
             />

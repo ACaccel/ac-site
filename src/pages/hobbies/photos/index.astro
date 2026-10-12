@@ -4,7 +4,7 @@ import AlbumGrid from '../../../components/AlbumGrid';
 import PageHeader from '../../../components/PageHeader';
 import RelatedPosts from '../../../components/RelatedPosts';
 import ThemeRoot from '../../../theme/ThemeRoot';
-import { profile } from '../../../data/profile';
+import { pageTitle } from '../../../data/site';
 import { formatDate, isoDate } from '../../../data/dates';
 import { getAlbums, hobbyCategory } from '../../../data/hobbies';
 import { responsiveImage } from '../../../data/images';
@@ -25,7 +25,7 @@ const albums = await Promise.all(
 const relatedPosts = postsWithTag(await getPosts(), category.tag).map(toPostSummary);
 ---
 
-<PageLayout title={`${category.title} | ${profile.name}`} description={category.description}>
+<PageLayout title={pageTitle(category.title)} description={category.description}>
   <PageHeader title={category.title} description={category.description} />
   <AlbumGrid albums={albums} />
   <ThemeRoot>

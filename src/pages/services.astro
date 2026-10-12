@@ -2,13 +2,14 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import PageHeader from '../components/PageHeader';
 import ServiceList from '../components/ServiceList';
-import { profile } from '../data/profile';
+import { pageTitle } from '../data/site';
+import { text } from '../data/text';
 import { getServices } from '../data/services';
 
 const services = await getServices();
 ---
 
-<PageLayout title={`服務 | ${profile.name}`} description="部署在 acserver.csie.org 上的公開服務。">
-  <PageHeader title="服務" description="部署在這台伺服器上的公開服務，按「開啟服務」即可使用。" />
+<PageLayout title={pageTitle(text.services.title)} description={text.services.description}>
+  <PageHeader title={text.services.title} description={text.services.description} />
   <ServiceList services={services} />
 </PageLayout>
