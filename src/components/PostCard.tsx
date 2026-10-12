@@ -24,6 +24,11 @@ export default function PostCard({ post }: { post: PostSummary }) {
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             {post.description}
           </Typography>
+          {post.tags.length > 0 && (
+            <Typography variant="caption" color="primary" component="p" sx={{ mt: 1.5 }}>
+              {post.tags.map((tag) => `#${tag}`).join(' ')}
+            </Typography>
+          )}
         </CardContent>
       </CardActionArea>
     </Card>

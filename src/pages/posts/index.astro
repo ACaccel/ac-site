@@ -3,9 +3,9 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import PageHeader from '../../components/PageHeader';
 import PostList from '../../components/PostList';
 import { profile } from '../../data/profile';
-import { getPosts, toPostSummary } from '../../data/posts';
+import { getPosts, getTagCounts, toPostSummary } from '../../data/posts';
 
-const posts = (await getPosts()).map(toPostSummary);
+const posts = await getPosts();
 ---
 
 <PageLayout
@@ -14,5 +14,5 @@ const posts = (await getPosts()).map(toPostSummary);
   width="narrow"
 >
   <PageHeader title="文章" />
-  <PostList posts={posts} />
+  <PostList posts={posts.map(toPostSummary)} tags={getTagCounts(posts)} />
 </PageLayout>

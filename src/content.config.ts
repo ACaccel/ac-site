@@ -20,6 +20,8 @@ const posts = defineCollection({
     description: z.string().min(1),
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
+    // Lowercase slugs, used in /posts/tags/<tag>/ URLs.
+    tags: z.array(z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)).default([]),
     draft: z.boolean().default(false),
   }),
 });

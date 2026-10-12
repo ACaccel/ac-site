@@ -1,0 +1,27 @@
+---
+import type { GetStaticPaths } from 'astro';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import PageHeader from '../../../components/PageHeader';
+import PostList from '../../../components/PostList';
+import { profile } from '../../../data/profile';
+import { getPosts, getTagCounts, postsWithTag, toPostSummary } from '../../../data/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  const tags = getTagCounts(posts);
+  return tags.map(({ tag }) => ({ params: { tag }, props: { posts, tags } }));
+}) satisfies GetStaticPaths;
+
+const { tag } = Astro.params;
+const { posts, tags } = Astro.props;
+const tagged = postsWithTag(posts, tag);
+---
+
+<PageLayout
+  title={`#${tag} | ${profile.name}`}
+  description={`${profile.name} 標記為 #${tag} 的文章。`}
+  width="narrow"
+>
+  <PageHeader title={`#${tag}`} description={`共 ${tagged.length} 篇文章`} />
+  <PostList posts={tagged.map(toPostSummary)} tags={tags} activeTag={tag} />
+</PageLayout>

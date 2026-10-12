@@ -17,16 +17,20 @@ template.
 
 Front matter fields:
 
-| Field         | Required | Notes                                                         |
-| ------------- | -------- | ------------------------------------------------------------- |
-| `title`       | Yes      | Page title and list entry                                     |
-| `description` | Yes      | One-line summary for the list and search engines              |
-| `date`        | Yes      | Publication date, `YYYY-MM-DD`                                |
-| `updated`     | No       | Last significant revision, `YYYY-MM-DD`                       |
-| `draft`       | No       | `true` hides the post from the deployed site; default `false` |
+| Field         | Required | Notes                                                                    |
+| ------------- | -------- | ------------------------------------------------------------------------ |
+| `title`       | Yes      | Page title and list entry                                                |
+| `description` | Yes      | One-line summary for the list and search engines                         |
+| `date`        | Yes      | Publication date, `YYYY-MM-DD`                                           |
+| `updated`     | No       | Last significant revision, `YYYY-MM-DD`                                  |
+| `tags`        | No       | Lowercase slugs such as `[nginx, games]`; each gets `/posts/tags/<tag>/` |
+| `draft`       | No       | `true` hides the post from the deployed site; default `false`            |
 
 The build fails on a missing or misspelled field, so a broken post never goes live. Code blocks
 get syntax highlighting when they name a language, such as ` ```ts `.
+
+Posts with two or more `##`/`###` headings get a table of contents on wide screens. Published
+posts also appear in the RSS feed at `/rss.xml`.
 
 ## Now
 

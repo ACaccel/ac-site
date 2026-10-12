@@ -2,44 +2,70 @@
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
-import PageHeader from '../../components/PageHeader';
-import Prose from '../../components/Prose';
+import PostArticle from '../../components/PostArticle';
 import { profile } from '../../data/profile';
 import { formatDate, isoDate } from '../../data/dates';
-import { getPosts, type Post } from '../../data/posts';
+import { adjacentPosts, getPosts, postHref, readingMinutes, type Post } from '../../data/posts';
 
 export const getStaticPaths = (async () => {
   const posts = await getPosts();
-  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+  return posts.map((post) => ({ params: { id: post.id }, props: { post, posts } }));
 }) satisfies GetStaticPaths;
 
 interface Props {
   post: Post;
+  posts: Post[];
 }
 
-const { post } = Astro.props;
-const { title, description, date, updated } = post.data;
-const { Content } = await render(post);
+const { post, posts } = Astro.props;
+const { title, description, date, updated, tags } = post.data;
+const { Content, headings } = await render(post);
+const toc = headings.filter((heading) => heading.depth <= 3);
+const { older, newer } = adjacentPosts(posts, post);
+const toLink = (entry: Post | undefined) =>
+  entry && { href: postHref(entry), title: entry.data.title };
 ---
 
-<PageLayout
-  title={`${title} | ${profile.name}`}
-  description={description}
-  width="narrow"
-  ogType="article"
->
-  <article>
-    <PageHeader title={title}>
-      <time datetime={isoDate(date)}>{formatDate(date)}</time>
-      {updated && (
-        <>
-          {' · 更新於 '}
-          <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
-        </>
-      )}
-    </PageHeader>
-    <Prose>
-      <Content />
-    </Prose>
-  </article>
+<PageLayout title={`${title} | ${profile.name}`} description={description} ogType="article">
+  <PostArticle
+    title={title}
+    date={formatDate(date)}
+    dateISO={isoDate(date)}
+    updated={updated && formatDate(updated)}
+    updatedISO={updated && isoDate(updated)}
+    minutes={readingMinutes(post.body ?? '')}
+    tags={tags}
+    toc={toc.length >= 2 ? toc : []}
+    older={toLink(older)}
+    newer={toLink(newer)}
+  >
+    <Content />
+  </PostArticle>
 </PageLayout>
+
+<script>
+  // Copy buttons need the browser, so they are added here instead of in the React markup.
+  for (const pre of document.querySelectorAll<HTMLPreElement>('.prose pre')) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    pre.before(wrapper);
+    wrapper.append(pre);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-button';
+    button.textContent = '複製';
+    let reset: number | undefined;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.querySelector('code')?.innerText ?? pre.innerText);
+        button.textContent = '已複製';
+      } catch {
+        button.textContent = '無法複製';
+      }
+      window.clearTimeout(reset);
+      reset = window.setTimeout(() => (button.textContent = '複製'), 2000);
+    });
+    wrapper.append(button);
+  }
+</script>

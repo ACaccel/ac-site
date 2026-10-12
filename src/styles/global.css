@@ -48,3 +48,45 @@
 .token.operator {
   color: #b4b4bb;
 }
+
+/* Copy button added to code blocks by the post page script. */
+.code-block {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--mui-palette-divider);
+  border-radius: var(--mui-shape-borderRadius);
+  background: var(--mui-palette-background-paper);
+  color: var(--mui-palette-text-secondary);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+
+.code-block:hover .copy-button,
+.copy-button:focus-visible {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  color: var(--mui-palette-primary-main);
+}
+
+.copy-button:focus-visible {
+  outline: 2px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}
+
+/* Touch screens have no hover, so keep the button visible. */
+@media (hover: none) {
+  .copy-button {
+    opacity: 1;
+  }
+}

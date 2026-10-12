@@ -2,6 +2,7 @@
 title: 範例文章
 description: 示範文章可用的欄位與 Markdown 語法的範本。
 date: 2026-10-12
+tags: [example]
 draft: true
 ---
 
@@ -21,3 +22,11 @@ console.log(greeting);
 ```
 
 > 引用文字。
+
+## 另一個段落
+
+文章有兩個以上的 `##` 或 `###` 標題時，寬螢幕會在右側顯示目錄。
+
+### 小標題
+
+小標題會縮排顯示在目錄中。
