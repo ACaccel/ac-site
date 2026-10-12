@@ -9,9 +9,9 @@ export async function getPosts(): Promise<Post[]> {
 }
 
 // Front matter dates have no time zone and parse as UTC midnight, so format them in UTC.
-const dateFormat = new Intl.DateTimeFormat('en-US', {
+const dateFormat = new Intl.DateTimeFormat('zh-TW', {
   year: 'numeric',
-  month: 'short',
+  month: 'long',
   day: 'numeric',
   timeZone: 'UTC',
 });

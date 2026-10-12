@@ -37,7 +37,8 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 ## Rules
 
-- Content is English-only; the old `/en/` path redirects to `/` in Nginx.
+- Content is Traditional Chinese (Taiwan); an English edition is undecided. The old `/en/` path
+  redirects to `/` in Nginx.
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as

@@ -1,23 +1,23 @@
 ---
-title: Example post
-description: A template showing the fields and Markdown a post can use.
+title: 範例文章
+description: 示範文章可用的欄位與 Markdown 語法的範本。
 date: 2026-10-12
 draft: true
 ---
 
-Drafts appear only in the local dev server (`npm run dev`), never in the deployed site. Copy this
-file, rename it, and set `draft: false` (or remove the line) to publish.
+草稿只會出現在本機開發伺服器（`npm run dev`），不會出現在正式網站。複製這個檔案並重新命名，再把
+`draft` 設為 `false`（或刪除這一行）即可發布。
 
-## A section heading
+## 段落標題
 
-Regular paragraphs, **bold**, _italic_, [links](https://astro.build/), and lists:
+一般段落、**粗體**、_斜體_、[連結](https://astro.build/)與清單：
 
-- First item
-- Second item
+- 第一項
+- 第二項
 
 ```ts
 const greeting: string = 'Hello';
 console.log(greeting);
 ```
 
-> A quote.
+> 引用文字。

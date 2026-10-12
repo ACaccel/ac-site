@@ -1,6 +1,6 @@
 # ac-site
 
-Personal website of ACaccel at <https://acserver.csie.org/>: an English introduction and links
+Personal website of ACaccel at <https://acserver.csie.org/>: a Traditional Chinese introduction and links
 to the public services hosted on the same domain.
 
 - [AGENTS.md](AGENTS.md): setup, validation, layout, and project rules

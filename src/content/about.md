@@ -1,2 +1,1 @@
-Based at the Department of Electrical Engineering, National Taiwan University, working on software
-development and server operations. This site lists the public services hosted on this server.
+目前在臺灣大學電機工程學系，主要從事軟體開發與伺服器維運。本站列出部署於此主機的公開服務。
