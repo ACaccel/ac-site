@@ -5,7 +5,8 @@ server process runs.
 
 ## Requirements
 
-- Clean, committed working tree: every release is named after and traceable to a commit.
+- Uncommitted changes are allowed; their release name ends in `-dirty`, so the live site cannot
+  be rebuilt from the commit alone. Commit first when the release must be traceable.
 - Project toolchain installed; see [AGENTS.md](../AGENTS.md#setup-and-validation).
 - Deployment user with sudo; the host has `python3`, `rsync`, `nginx`, `systemctl`, `flock`, and
   `curl`, and Nginx is running.
@@ -20,12 +21,12 @@ server process runs.
 bash deploy/deploy.sh
 ```
 
-1. As the invoking user: refuses a dirty tree, runs `npm run check`, then reruns itself through
-   `sudo`.
+1. As the invoking user: warns about uncommitted changes, runs `npm run check`, then reruns
+   itself through `sudo`.
 2. Takes `/run/lock/ac-site-deploy.lock` and the host-wide
    `/run/lock/acserver-nginx-deploy.lock` (waits up to 60 s for other projects).
-3. Backs up the site file and snippets, copies `dist/` to `releases/<UTC time>-<commit>/`, and
-   switches the `current` symlink.
+3. Backs up the site file and snippets, copies `dist/` to
+   `releases/<UTC time>-<commit>[-dirty]/`, and switches the `current` symlink.
 4. Only when `deploy/nginx/` or the site-file routing differs from the installed state: installs
    the snippets, replaces the placeholder in both server blocks with managed include blocks, runs
    `nginx -t`, and reloads Nginx.

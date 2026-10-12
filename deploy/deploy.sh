@@ -7,19 +7,21 @@ web_root=/var/www/ac-site
 backup_root=/var/backups/ac-site
 host=acserver.csie.org
 keep_releases=5
-release_pattern='[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12,40}'
+# <UTC time>-<commit>, with -dirty when the working tree had uncommitted changes.
+release_pattern='[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12,40}(-dirty)?'
 
 if [[ $EUID -ne 0 ]]; then
   cd "$repo_dir"
-  # Every release must correspond to a commit so the live site can be traced and rebuilt.
-  changes=$(git status --porcelain)
-  if [[ -n $changes ]]; then
-    echo 'Commit or stash local changes before deploying.' >&2
-    exit 1
+  # Uncommitted changes are allowed, but the release name marks them so the live site is not
+  # mistaken for a build of the commit alone.
+  suffix=''
+  if [[ -n $(git status --porcelain) ]]; then
+    suffix='-dirty'
+    echo 'Warning: deploying uncommitted changes; the release is marked -dirty.' >&2
   fi
   export PATH="$repo_dir/.conda/bin:$PATH"
   npm run check
-  release="$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short=12 HEAD)"
+  release="$(date -u +%Y%m%dT%H%M%SZ)-$(git rev-parse --short=12 HEAD)$suffix"
   exec sudo bash "$repo_dir/deploy/deploy.sh" --install "$release"
 fi
 
