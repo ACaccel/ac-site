@@ -1,7 +1,8 @@
-"""Fail when the built site contains script that the CSP would block.
+"""Fail when the built site contains script the CSP would block or unreferenced images.
 
 The CSP allows only same-origin script files, so inline scripts, inline event handlers, and
-javascript: URLs must never reach dist/.
+javascript: URLs must never reach dist/. Unreferenced images are source photos that Astro copies
+with their original metadata; the prune-unused-images integration must have removed them.
 """
 
 import sys
@@ -11,6 +12,8 @@ from pathlib import Path
 DIST = Path(__file__).resolve().parent.parent / "dist"
 # Data blocks are never executed, so the CSP does not apply to them.
 DATA_SCRIPT_TYPES = {"application/ld+json", "application/json"}
+IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".tiff"}
+TEXT_SUFFIXES = {".html", ".css", ".js", ".xml", ".json", ".txt"}
 
 
 class Checker(HTMLParser):
@@ -44,7 +47,22 @@ def main() -> int:
     if failed:
         print("The CSP blocks inline script; move it into a bundled <script> file.", file=sys.stderr)
         return 1
-    print(f"Checked {len(pages)} pages: no inline script.")
+
+    corpus = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in DIST.rglob("*")
+        if path.is_file() and path.suffix in TEXT_SUFFIXES
+    )
+    unreferenced = [
+        path.relative_to(DIST)
+        for path in (DIST / "_astro").rglob("*")
+        if path.suffix.lower() in IMAGE_SUFFIXES and path.name not in corpus
+    ]
+    for path in unreferenced:
+        print(f"{path}: unreferenced image, may keep original metadata", file=sys.stderr)
+    if unreferenced:
+        return 1
+    print(f"Checked {len(pages)} pages: no inline script or unreferenced images.")
     return 0
 
 

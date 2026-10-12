@@ -6,6 +6,7 @@ import { site } from '../data/site';
 import { getPosts, toPostSummary } from '../data/posts';
 import { getServices } from '../data/services';
 import { getProjects, toProjectSummary } from '../data/projects';
+import { hobbyCategories } from '../data/hobbies';
 import { getNow } from '../data/now';
 import { formatDate, isoDate } from '../data/dates';
 
@@ -24,5 +25,11 @@ const now = nowEntry && {
 ---
 
 <PageLayout title={profile.name} description={site.description}>
-  <HomePage now={now} posts={posts} projects={projects} services={services} />
+  <HomePage
+    hobbies={hobbyCategories}
+    now={now}
+    posts={posts}
+    projects={projects}
+    services={services}
+  />
 </PageLayout>

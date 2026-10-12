@@ -1,9 +1,9 @@
 # ac-site
 
-Personal website of ACaccel at <https://acserver.csie.org/>: a Traditional Chinese introduction and links
-to the public services hosted on the same domain.
+Personal website of ACaccel at <https://acserver.csie.org/>, in Traditional Chinese: posts, now,
+hobbies, projects, and the public services hosted on the same domain.
 
 - [AGENTS.md](AGENTS.md): setup, validation, layout, and project rules
-- [docs/writing.md](docs/writing.md): edit the introduction and write posts
+- [docs/writing.md](docs/writing.md): write posts and edit every page's content
 - [docs/deployment.md](docs/deployment.md): deploy, rollback, and host paths
-- [docs/roadmap.md](docs/roadmap.md): proposed content and design directions
+- [docs/roadmap.md](docs/roadmap.md): audience, site structure, and next directions

@@ -16,26 +16,29 @@ CONDA_EXE=~/miniforge3/bin/conda scripts/setup-env.sh   # create .conda and run 
 export PATH="$PWD/.conda/bin:$PATH"
 npm run dev      # local dev server
 npm run format   # apply Prettier
-npm run check    # format check, lint, type check, deploy tests, build, dist CSP check
+npm run photos   # strip metadata from album photos before committing them
+npm run check    # format, lint, types, deploy tests, photo metadata, build, dist checks
 ```
 
 Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 ## Layout
 
-| Path                                      | Purpose                                                      |
-| ----------------------------------------- | ------------------------------------------------------------ |
-| `src/pages/`                              | Routes; see [docs/writing.md](docs/writing.md) for each page |
-| `src/layouts/`                            | `BaseLayout` (head, meta) and `PageLayout` (page shell)      |
-| `src/components/`                         | React components; `PageShell` holds the app bar and footer   |
-| `src/theme/`                              | MUI theme and the `ThemeRoot` wrapper every root needs       |
-| `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md) |
-| `src/content.config.ts`                   | Content schemas                                              |
-| `src/data/`                               | Content loading; `profile.ts` and `site.ts` hold site data   |
-| `scripts/check-dist.py`                   | Fails the build output on inline script the CSP would block  |
-| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts   |
-| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                        |
-| `docs/roadmap.md`                         | Proposed content and design directions                       |
+| Path                                      | Purpose                                                       |
+| ----------------------------------------- | ------------------------------------------------------------- |
+| `src/pages/`                              | Routes; see [docs/writing.md](docs/writing.md) for each page  |
+| `src/layouts/`                            | `BaseLayout` (head, meta) and `PageLayout` (page shell)       |
+| `src/components/`                         | React components; `PageShell` holds the app bar and footer    |
+| `src/theme/`                              | MUI theme and the `ThemeRoot` wrapper every root needs        |
+| `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md)  |
+| `src/content.config.ts`                   | Content schemas                                               |
+| `src/data/`                               | Content loading; `profile.ts` and `site.ts` hold site data    |
+| `src/integrations/`                       | Build hook removing source images copied into `dist/`         |
+| `scripts/check-dist.py`                   | Fails on inline script or unreferenced images in `dist/`      |
+| `scripts/photos.mjs`                      | Strips photo metadata; `--check` mode runs in `npm run check` |
+| `deploy/`                                 | Nginx snippets, site-file editor and tests, deploy scripts    |
+| `environment.yml`, `scripts/setup-env.sh` | Toolchain environment                                         |
+| `docs/roadmap.md`                         | Audience, site structure, design, next directions             |
 
 ## Rules
 
@@ -52,5 +55,6 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 - Material UI renders inline `<style>` elements, so the CSP allows `'unsafe-inline'` in
   `style-src`. Scripts stay strict: `script-src 'self'` only, no inline scripts or handlers
   (`npm run test:dist` enforces this).
+- Album photos are public: commit them only after `npm run photos` removes their metadata.
 - Output stays fully static; the site runs no server process.
 - Never edit other projects' managed blocks in the shared Nginx site file.

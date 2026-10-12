@@ -81,4 +81,71 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { services, posts, now, experience, projects };
+// Hobby log entries; `post` is the id of a longer write-up in src/content/posts.
+const logEntry = {
+  id: entryId,
+  title: z.string().min(1),
+  note: z.string().min(1).optional(),
+  /** Last time this entry changed, such as when you finished it. */
+  updated: z.coerce.date().optional(),
+  post: z.string().optional(),
+  link: z.url({ protocol: /^https$/ }).optional(),
+};
+
+const games = defineCollection({
+  loader: file('src/content/games.yaml'),
+  schema: z.strictObject({
+    ...logEntry,
+    status: z.enum(['playing', 'finished', 'paused']),
+    platform: z.string().min(1).optional(),
+  }),
+});
+
+const media = defineCollection({
+  loader: file('src/content/media.yaml'),
+  schema: z.strictObject({
+    ...logEntry,
+    type: z.enum(['book', 'anime', 'drama']),
+    status: z.enum(['in-progress', 'finished', 'paused']),
+    /** Author, studio, or director. */
+    creator: z.string().min(1).optional(),
+  }),
+});
+
+const albums = defineCollection({
+  // One folder per album: albums/<id>/index.md with its photos beside it.
+  loader: glob({
+    pattern: '*/index.md',
+    base: './src/content/albums',
+    generateId: ({ entry }) => entry.replace(/\/index\.md$/, ''),
+  }),
+  schema: ({ image }) =>
+    z.strictObject({
+      title: z.string().min(1),
+      date: z.coerce.date(),
+      location: z.string().min(1).optional(),
+      description: z.string().min(1),
+      cover: image(),
+      photos: z
+        .array(
+          z.strictObject({
+            src: image(),
+            alt: z.string().min(1),
+            caption: z.string().min(1).optional(),
+          }),
+        )
+        .min(1),
+      draft: z.boolean().default(false),
+    }),
+});
+
+export const collections = {
+  services,
+  posts,
+  now,
+  experience,
+  projects,
+  games,
+  media,
+  albums,
+};

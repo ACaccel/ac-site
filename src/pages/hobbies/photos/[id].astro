@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import AlbumDetail from '../../../components/AlbumDetail';
+import { profile } from '../../../data/profile';
+import { formatDate, isoDate } from '../../../data/dates';
+import { getAlbums, type Album } from '../../../data/hobbies';
+import { largeImage, responsiveImage } from '../../../data/images';
+
+export const getStaticPaths = (async () => {
+  const albums = await getAlbums();
+  return albums.map((album) => ({ params: { id: album.id }, props: { album } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  album: Album;
+}
+
+const { album } = Astro.props;
+const { title, description, date, location } = album.data;
+const { Content } = await render(album);
+const photos = await Promise.all(
+  album.data.photos.map(async (photo) => ({
+    image: await responsiveImage(photo.src, [400, 800]),
+    large: await largeImage(photo.src),
+    alt: photo.alt,
+    caption: photo.caption,
+  })),
+);
+---
+
+<PageLayout title={`${title} | ${profile.name}`} description={description}>
+  <AlbumDetail
+    title={title}
+    description={description}
+    date={formatDate(date)}
+    dateISO={isoDate(date)}
+    location={location}
+    photos={photos}
+  >
+    <Content />
+  </AlbumDetail>
+</PageLayout>

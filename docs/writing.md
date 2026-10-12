@@ -8,6 +8,9 @@ Site text lives in Markdown files under `src/content/`; editing them needs no co
 | `src/content/now.md`           | Now page at `/now/` and the homepage card                     |
 | `src/content/about.md`         | Introduction on `/about/`                                     |
 | `src/content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)          |
+| `src/content/games.yaml`       | Games on `/hobbies/games/`                                    |
+| `src/content/media.yaml`       | Books, anime, dramas on `/hobbies/media/`                     |
+| `src/content/albums/<id>/`     | Album at `/hobbies/photos/<id>/`                              |
 | `src/content/services.json`    | Services on `/services/` and the homepage                     |
 | `src/content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage |
 | `src/data/profile.ts`          | Name, tagline, profile links, contact email                   |
@@ -60,6 +63,32 @@ and `draft`.
 Each entry in `experience.yaml` has a unique `id`, `title`, `organization`, `start` (`YYYY-MM`),
 an optional `end` (omit while ongoing), and an optional one-sentence `description`. Entries are
 listed newest first. The file's header comment shows an example.
+
+## Hobbies
+
+`games.yaml` and `media.yaml` are lists; their header comments show every field. Shared fields:
+unique `id`, `title`, `status`, and optional `note`, `updated` (`YYYY-MM-DD`), `post` (id of a
+longer write-up), and `link`. Games add `platform`; media add `type` (`book`, `anime`, `drama`)
+and `creator`. A `post` that is still a draft is not linked; an unknown id fails the build.
+
+Posts tagged `games`, `media`, or `travel` appear as related posts in the matching category.
+
+## Photos
+
+Each album is a folder `src/content/albums/<id>/` with `index.md` and its photos;
+[`example-album`](../src/content/albums/example-album/index.md) is a draft template. Front
+matter: `title`, `date`, `description`, `cover` and `photos[].src` (paths such as
+`./photo-1.jpg`), `photos[].alt` (what the photo shows), and optional `location`,
+`photos[].caption`, and `draft`.
+
+Photos are public once committed, so before committing run:
+
+```sh
+npm run photos   # rotate upright, fit within 2560px, remove EXIF/GPS and other metadata
+```
+
+`npm run check` fails on photos that still carry metadata. The site serves only resized WebP
+copies; the build removes the original files from its output.
 
 ## Preview and publish
 

@@ -1,0 +1,11 @@
+# Games on /hobbies/games/, grouped by status. Example entry:
+#
+# - id: hollow-knight
+#   title: Hollow Knight
+#   status: finished # playing, finished, or paused
+#   platform: Switch
+#   note: One-sentence review.
+#   updated: 2026-10-01
+#   post: hollow-knight-review # id of a post with a longer review
+#   link: https://example.com/
+[]

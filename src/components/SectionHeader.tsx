@@ -7,7 +7,7 @@ interface Props {
   id: string;
   title: string;
   /** Link to the full page for this section. */
-  more?: { href: string; label: string };
+  more?: { href: string; label: string } | undefined;
 }
 
 /** Section title row; render inside a ThemeRoot. */

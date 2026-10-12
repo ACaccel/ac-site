@@ -8,17 +8,20 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
 import CardGrid from './CardGrid';
+import HobbyCategoryCard from './HobbyCategoryCard';
 import NowCard, { type NowSummary } from './NowCard';
 import PostCard from './PostCard';
 import ProjectCard from './ProjectCard';
 import SectionHeader from './SectionHeader';
 import ServiceCard from './ServiceCard';
 import { profile } from '../data/profile';
+import type { HobbyCategory } from '../data/hobbies';
 import type { PostSummary } from '../data/posts';
 import type { ProjectSummary } from '../data/projects';
 import type { Service } from '../data/services';
 
 interface Props {
+  hobbies: HobbyCategory[];
   now?: NowSummary | undefined;
   posts: PostSummary[];
   projects: ProjectSummary[];
@@ -27,7 +30,7 @@ interface Props {
 
 const sectionSx = { mt: { xs: 6, md: 8 } };
 
-export default function HomePage({ now, posts, projects, services }: Props) {
+export default function HomePage({ hobbies, now, posts, projects, services }: Props) {
   return (
     <ThemeRoot>
       <Box component="section" sx={{ py: { xs: 2, md: 4 } }}>
@@ -86,6 +89,21 @@ export default function HomePage({ now, posts, projects, services }: Props) {
           </CardGrid>
         </Box>
       )}
+
+      <Box component="section" aria-labelledby="hobbies-heading" sx={sectionSx}>
+        <SectionHeader
+          id="hobbies-heading"
+          title="興趣"
+          more={{ href: '/hobbies/', label: '興趣專區' }}
+        />
+        <CardGrid>
+          {hobbies.map((category) => (
+            <li key={category.id}>
+              <HobbyCategoryCard category={category} />
+            </li>
+          ))}
+        </CardGrid>
+      </Box>
 
       {projects.length > 0 && (
         <Box component="section" aria-labelledby="projects-heading" sx={sectionSx}>
