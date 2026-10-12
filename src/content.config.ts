@@ -36,4 +36,23 @@ const now = defineCollection({
   }),
 });
 
-export const collections = { services, posts, now };
+// Year and month, such as 2024-09.
+const yearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
+
+// Array entries in a data file carry their own id, which the file loader leaves in the data.
+const entryId = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+
+const experience = defineCollection({
+  loader: file('src/content/experience.yaml'),
+  schema: z.strictObject({
+    id: entryId,
+    title: z.string().min(1),
+    organization: z.string().min(1),
+    start: yearMonth,
+    /** Omitted while ongoing. */
+    end: yearMonth.optional(),
+    description: z.string().min(1).optional(),
+  }),
+});
+
+export const collections = { services, posts, now, experience };

@@ -5,12 +5,20 @@ import { profile } from '../data/profile';
 import { site } from '../data/site';
 import { getPosts, toPostSummary } from '../data/posts';
 import { getServices } from '../data/services';
+import { getNow } from '../data/now';
+import { formatDate, isoDate } from '../data/dates';
 
 const recentPostCount = 3;
 const posts = (await getPosts()).slice(0, recentPostCount).map(toPostSummary);
 const services = await getServices();
+const nowEntry = await getNow();
+const now = nowEntry && {
+  summary: nowEntry.data.summary,
+  updated: formatDate(nowEntry.data.updated),
+  updatedISO: isoDate(nowEntry.data.updated),
+};
 ---
 
 <PageLayout title={profile.name} description={site.description}>
-  <HomePage posts={posts} services={services} />
+  <HomePage now={now} posts={posts} services={services} />
 </PageLayout>

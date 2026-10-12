@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import PageHeader from '../components/PageHeader';
+import Prose from '../components/Prose';
+import { profile } from '../data/profile';
+import { formatDate, isoDate } from '../data/dates';
+import { getNow, type Now } from '../data/now';
+
+// A dynamic route only so the page can be skipped while now.md is a draft.
+export const getStaticPaths = (async () => {
+  const now = await getNow();
+  return now ? [{ params: { now: 'now' }, props: { now } }] : [];
+}) satisfies GetStaticPaths;
+
+interface Props {
+  now: Now;
+}
+
+const { now } = Astro.props;
+const { Content } = await render(now);
+---
+
+<PageLayout title={`近況 | ${profile.name}`} description={now.data.summary} width="narrow">
+  <PageHeader title="近況" description={now.data.summary}>
+    更新於 <time datetime={isoDate(now.data.updated)}>{formatDate(now.data.updated)}</time>
+  </PageHeader>
+  <Prose>
+    <Content />
+  </Prose>
+</PageLayout>

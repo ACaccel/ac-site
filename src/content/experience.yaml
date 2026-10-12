@@ -1,0 +1,10 @@
+# Experience summary on /about/, newest first after sorting by start.
+# Each entry needs a unique id, for example:
+#
+# - id: ntu-ee
+#   title: Student
+#   organization: Department of Electrical Engineering, National Taiwan University
+#   start: 2023-09
+#   end: 2027-06 # omit while ongoing
+#   description: One optional sentence.
+[]

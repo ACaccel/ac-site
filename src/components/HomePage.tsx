@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
 import CardGrid from './CardGrid';
+import NowCard, { type NowSummary } from './NowCard';
 import PostCard from './PostCard';
 import SectionHeader from './SectionHeader';
 import ServiceCard from './ServiceCard';
@@ -16,16 +17,17 @@ import type { PostSummary } from '../data/posts';
 import type { Service } from '../data/services';
 
 interface Props {
+  now?: NowSummary | undefined;
   posts: PostSummary[];
   services: Service[];
 }
 
 const sectionSx = { mt: { xs: 6, md: 8 } };
 
-export default function HomePage({ posts, services }: Props) {
+export default function HomePage({ now, posts, services }: Props) {
   return (
     <ThemeRoot>
-      <Box component="section" sx={{ py: { xs: 2, md: 6 } }}>
+      <Box component="section" sx={{ py: { xs: 2, md: 4 } }}>
         <Typography variant="h1" sx={{ fontSize: { xs: '2.25rem', md: '3rem' } }}>
           {profile.name}
         </Typography>
@@ -58,6 +60,12 @@ export default function HomePage({ posts, services }: Props) {
           </Button>
         </Stack>
       </Box>
+
+      {now && (
+        <Box sx={sectionSx}>
+          <NowCard now={now} />
+        </Box>
+      )}
 
       {posts.length > 0 && (
         <Box component="section" aria-labelledby="posts-heading" sx={sectionSx}>
