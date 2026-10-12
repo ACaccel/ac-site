@@ -1,4 +1,4 @@
-name: ac-site
+name: acaccel-site
 channels:
   - conda-forge
   - nodefaults

@@ -13,7 +13,7 @@ server process runs.
 - The site file `/etc/nginx/sites-enabled/acserver.csie.org` has exactly one HTTP and one HTTPS
   server block for the host, each with an explicit IPv4 `listen` address. Each block has no root
   location other than one placeholder `location / { return 404; }` or one
-  `# ac-site managed route` block.
+  `# acaccel-site managed route` block.
 
 ## Deploy
 
@@ -23,7 +23,7 @@ bash deploy/deploy.sh
 
 1. As the invoking user: warns about uncommitted changes, runs `npm run check`, then reruns
    itself through `sudo`.
-2. Takes `/run/lock/ac-site-deploy.lock` and the host-wide
+2. Takes `/run/lock/acaccel-site-deploy.lock` and the host-wide
    `/run/lock/acserver-nginx-deploy.lock` (waits up to 60 s for other projects).
 3. Backs up the site file and snippets, copies `dist/` to
    `releases/<UTC time>-<commit>[-dirty]/`, and switches the `current` symlink.
@@ -45,6 +45,13 @@ On any failure, including a failed health check or an interrupt, the script rest
 release, site file, and snippets, and reloads Nginx if it changed them. It prints the backup
 directory and lists any item that needs manual repair.
 
+### Migration from the former name
+
+The project was renamed from `ac-site`. The first deploy under the new name copies
+`/var/www/ac-site` and moves `/var/backups/ac-site` to the new paths, rewrites the
+`# ac-site managed route` blocks, and, after the health checks pass, deletes the old web root and
+snippets. Copies of the old snippets stay in that deploy's backup directory.
+
 ## Roll back
 
 ```sh
@@ -65,10 +72,10 @@ intact.
 
 ## Host paths
 
-| Path                                    | Contents                                  |
-| --------------------------------------- | ----------------------------------------- |
-| `/var/www/ac-site/current`              | Symlink to the live release               |
-| `/var/www/ac-site/releases/`            | Release directories                       |
-| `/var/backups/ac-site/deploy-*/`        | Site file and snippet backups per deploy  |
-| `/etc/nginx/snippets/ac-site.conf`      | HTTPS routes, cache, and security headers |
-| `/etc/nginx/snippets/ac-site-http.conf` | HTTP to HTTPS redirect                    |
+| Path                                         | Contents                                  |
+| -------------------------------------------- | ----------------------------------------- |
+| `/var/www/acaccel-site/current`              | Symlink to the live release               |
+| `/var/www/acaccel-site/releases/`            | Release directories                       |
+| `/var/backups/acaccel-site/deploy-*/`        | Site file and snippet backups per deploy  |
+| `/etc/nginx/snippets/acaccel-site.conf`      | HTTPS routes, cache, and security headers |
+| `/etc/nginx/snippets/acaccel-site-http.conf` | HTTP to HTTPS redirect                    |

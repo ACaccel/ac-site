@@ -21,7 +21,7 @@ profile:
 site:
   # Search engine and link preview description of the homepage.
   description: '{name} 的個人網站：文章、近況、興趣、專案，以及部署在 acserver.csie.org 上的服務。'
-  sourceUrl: https://github.com/ACaccel/ac-site
+  sourceUrl: https://github.com/ACaccel/acaccel-site
 
 nav:
   posts: 文章

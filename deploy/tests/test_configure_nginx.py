@@ -53,10 +53,17 @@ def https_block(site: str) -> str:
 class UpdateSiteTest(unittest.TestCase):
     def test_deploy_replaces_placeholders_in_each_protocol(self) -> None:
         result = configure.update_site(SITE, "deploy")
-        self.assertIn("include /etc/nginx/snippets/ac-site-http.conf;", http_block(result))
-        self.assertIn("include /etc/nginx/snippets/ac-site.conf;", https_block(result))
+        self.assertIn("include /etc/nginx/snippets/acaccel-site-http.conf;", http_block(result))
+        self.assertIn("include /etc/nginx/snippets/acaccel-site.conf;", https_block(result))
         self.assertNotIn("location / { return 404; }", result)
         self.assertIn("include /etc/nginx/snippets/other-app.conf;", result)
+
+    def test_deploy_migrates_blocks_of_the_former_name(self) -> None:
+        current = configure.update_site(SITE, "deploy")
+        legacy = current.replace("acaccel-site", "ac-site")
+        self.assertIn("# ac-site managed route BEGIN https", legacy)
+        self.assertEqual(configure.update_site(legacy, "deploy"), current)
+        self.assertEqual(configure.update_site(legacy, "remove"), SITE)
 
     def test_deploy_is_idempotent(self) -> None:
         once = configure.update_site(SITE, "deploy")

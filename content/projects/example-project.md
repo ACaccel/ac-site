@@ -6,7 +6,7 @@ start: 2026-01
 stack: [TypeScript, Astro]
 links:
   - label: GitHub
-    href: https://github.com/ACaccel/ac-site
+    href: https://github.com/ACaccel/acaccel-site
 featured: true
 draft: true
 ---

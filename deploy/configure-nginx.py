@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write a site-file candidate that routes the domain root to ac-site.
+"""Write a site-file candidate that routes the domain root to acaccel-site.
 
 The input file is never modified. Deploy replaces the unmanaged placeholder root
 location with a marked include block; remove restores the placeholder. Blocks managed
@@ -12,11 +12,13 @@ import sys
 from pathlib import Path
 
 HOST = "acserver.csie.org"
-MARKER = "# ac-site managed route"
+MARKER = "# acaccel-site managed route"
+# Blocks written under the former project name; deploy rewrites them under MARKER.
+LEGACY_MARKER = "# ac-site managed route"
 PLACEHOLDER = "    location / { return 404; }\n"
 SNIPPETS = {
-    "http": "/etc/nginx/snippets/ac-site-http.conf",
-    "https": "/etc/nginx/snippets/ac-site.conf",
+    "http": "/etc/nginx/snippets/acaccel-site-http.conf",
+    "https": "/etc/nginx/snippets/acaccel-site.conf",
 }
 
 PLACEHOLDER_LINE = re.compile(r"^[ \t]*location / \{ return 404; \}[ \t]*\n", re.MULTILINE)
@@ -36,8 +38,9 @@ def managed_block(protocol: str) -> str:
 
 
 def managed_pattern(protocol: str) -> re.Pattern[str]:
+    markers = "|".join(re.escape(marker) for marker in (MARKER, LEGACY_MARKER))
     return re.compile(
-        rf"^{re.escape(MARKER)} BEGIN {protocol}\n.*?^{re.escape(MARKER)} END {protocol}\n",
+        rf"^(?P<marker>{markers}) BEGIN {protocol}\n.*?^(?P=marker) END {protocol}\n",
         re.MULTILINE | re.DOTALL,
     )
 
@@ -104,9 +107,9 @@ def server_protocol(body: str) -> str | None:
 
 def update_body(body: str, protocol: str, action: str) -> str:
     pattern = managed_pattern(protocol)
-    managed = pattern.findall(body)
+    managed = list(pattern.finditer(body))
     if len(managed) > 1:
-        raise ConfigError(f"Duplicate ac-site managed blocks in the {protocol} server.")
+        raise ConfigError(f"Duplicate acaccel-site managed blocks in the {protocol} server.")
     if action == "remove":
         return pattern.sub(lambda _: PLACEHOLDER, body) if managed else body
     if managed:

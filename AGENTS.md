@@ -1,4 +1,4 @@
-# ac-site project instructions
+# acaccel-site project instructions
 
 Authoritative project rule set; `CLAUDE.md` points here.
 

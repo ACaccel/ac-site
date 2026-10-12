@@ -6,10 +6,10 @@ if [[ $EUID -ne 0 ]]; then
   exec sudo bash "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/rollback.sh"
 fi
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
-web_root=/var/www/ac-site
+web_root=/var/www/acaccel-site
 
-exec 9>/run/lock/ac-site-deploy.lock
-flock -n 9 || { echo 'An ac-site deployment is running.' >&2; exit 1; }
+exec 9>/run/lock/acaccel-site-deploy.lock
+flock -n 9 || { echo 'An acaccel-site deployment is running.' >&2; exit 1; }
 
 current=$(readlink "$web_root/current")
 previous=$(find "$web_root/releases" -mindepth 1 -maxdepth 1 -type d -regextype posix-extended \

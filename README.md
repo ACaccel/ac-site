@@ -1,4 +1,4 @@
-# ac-site
+# acaccel-site
 
 Personal website of ACaccel at <https://acserver.csie.org/>, in Traditional Chinese: posts, now,
 hobbies, projects, and the public services hosted on the same domain.

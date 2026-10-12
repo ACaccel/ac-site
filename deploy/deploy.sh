@@ -3,8 +3,12 @@
 set -Eeuo pipefail
 
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
-web_root=/var/www/ac-site
-backup_root=/var/backups/ac-site
+web_root=/var/www/acaccel-site
+backup_root=/var/backups/acaccel-site
+# Host paths of the former project name, moved by the first deploy under the new name.
+legacy_web_root=/var/www/ac-site
+legacy_backup_root=/var/backups/ac-site
+legacy_snippets=(/etc/nginx/snippets/ac-site.conf /etc/nginx/snippets/ac-site-http.conf)
 host=acserver.csie.org
 keep_releases=5
 # <UTC time>-<commit>, with -dirty when the working tree had uncommitted changes.
@@ -35,8 +39,8 @@ for tool in python3 rsync nginx systemctl flock curl; do command -v "$tool" >/de
 test -f "$repo_dir/dist/index.html"
 test -f "$repo_dir/dist/404.html"
 
-exec 9>/run/lock/ac-site-deploy.lock
-flock -n 9 || { echo 'Another ac-site deployment is running.' >&2; exit 1; }
+exec 9>/run/lock/acaccel-site-deploy.lock
+flock -n 9 || { echo 'Another acaccel-site deployment is running.' >&2; exit 1; }
 exec 8>/run/lock/acserver-nginx-deploy.lock
 flock -w 60 8 || { echo 'Another shared Nginx deployment is running.' >&2; exit 1; }
 
@@ -52,16 +56,27 @@ http_address=$(grep -Po '^\s*listen\s+\K[0-9.]+(?=:80\s*;)' "$site_file" | head 
   exit 1
 }
 
+# Carry over the releases and backups of the former name so rollback keeps working. The
+# legacy web root stays untouched and keeps serving until the new routing is live.
+if [[ -d $legacy_backup_root && ! -e $backup_root ]]; then
+  mv -T "$legacy_backup_root" "$backup_root"
+fi
+if [[ -d $legacy_web_root && ! -e $web_root ]]; then
+  cp -a "$legacy_web_root" "$web_root"
+fi
 install -d -m 0755 "$web_root" "$web_root/releases"
 install -d -m 0700 "$backup_root"
 backup_dir=$(mktemp -d "$backup_root/deploy-$release-XXXXXX")
 cp -p "$site_file" "$backup_dir/site.conf"
 declare -A snippets=(
-  [ac-site.conf]=/etc/nginx/snippets/ac-site.conf
-  [ac-site-http.conf]=/etc/nginx/snippets/ac-site-http.conf
+  [acaccel-site.conf]=/etc/nginx/snippets/acaccel-site.conf
+  [acaccel-site-http.conf]=/etc/nginx/snippets/acaccel-site-http.conf
 )
 for name in "${!snippets[@]}"; do
   if [[ -f ${snippets[$name]} ]]; then cp -p "${snippets[$name]}" "$backup_dir/$name"; fi
+done
+for legacy in "${legacy_snippets[@]}"; do
+  if [[ -f $legacy ]]; then cp -p "$legacy" "$backup_dir/legacy-$(basename -- "$legacy")"; fi
 done
 previous_release=$(readlink "$web_root/current" || true)
 python3 -B "$repo_dir/deploy/configure-nginx.py" \
@@ -73,7 +88,7 @@ nginx_changed=false
 # Replace a file atomically, keeping the owner and mode of the file it replaces.
 replace_file() {
   local source=$1 target=$2 temp
-  temp=$(mktemp "$(dirname -- "$target")/.ac-site-XXXXXX")
+  temp=$(mktemp "$(dirname -- "$target")/.acaccel-site-XXXXXX")
   cp -- "$source" "$temp"
   if [[ -e $target ]]; then
     chown --reference="$target" "$temp"
@@ -159,9 +174,14 @@ expect_status() {
 }
 expect_status 200 "https://$host/" 443 "$https_address"
 expect_status 301 "https://$host/en/" 443 "$https_address"
-expect_status 404 "https://$host/ac-site-deploy-check-$release/" 443 "$https_address"
+expect_status 404 "https://$host/acaccel-site-deploy-check-$release/" 443 "$https_address"
 expect_status 308 "http://$host/" 80 "$http_address"
 trap - ERR INT HUP TERM
+
+# The new routing is live, so nothing references the former name's files anymore; the backup
+# directory keeps copies of the legacy snippets.
+rm -f -- "${legacy_snippets[@]}"
+rm -rf -- "$legacy_web_root"
 
 # Keep the newest releases; the current one is always among them.
 find "$web_root/releases" -mindepth 1 -maxdepth 1 -type d \
