@@ -1,12 +1,11 @@
 import ArrowForward from '@mui/icons-material/ArrowForward';
-import GitHub from '@mui/icons-material/GitHub';
-import Link from '@mui/icons-material/Link';
 import MailOutlined from '@mui/icons-material/MailOutlined';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
+import LinkIcon from './LinkIcon';
 import CardGrid from './CardGrid';
 import HobbyCategoryCard from './HobbyCategoryCard';
 import NowCard, { type NowSummary } from './NowCard';
@@ -48,7 +47,7 @@ export default function HomePage({ hobbies, now, posts, projects, services }: Pr
               variant="outlined"
               href={link.href}
               rel="me noopener"
-              startIcon={link.label === 'GitHub' ? <GitHub /> : <Link />}
+              startIcon={<LinkIcon href={link.href} />}
             >
               {link.label}
             </Button>

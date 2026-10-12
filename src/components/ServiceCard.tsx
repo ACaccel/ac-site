@@ -1,11 +1,11 @@
 import ArrowOutward from '@mui/icons-material/ArrowOutward';
 import GitHub from '@mui/icons-material/GitHub';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import type { Service } from '../data/services';
@@ -62,16 +62,32 @@ export default function ServiceCard({ service, detailed = false }: Props) {
           </>
         )}
       </CardContent>
-      <CardActions sx={{ px: 2, pb: 2 }}>
+      {/* Icon-only buttons; the label from site.yaml stays as tooltip and accessible name. */}
+      <CardActions sx={{ px: 2, pb: 2, gap: 1 }}>
         {service.status !== 'archived' && (
-          <Button variant="contained" size="small" href={service.path} endIcon={<ArrowOutward />}>
-            {text.services.open}
-          </Button>
+          <IconButton
+            href={service.path}
+            aria-label={text.services.open}
+            title={text.services.open}
+            sx={{
+              bgcolor: 'primary.main',
+              color: 'primary.contrastText',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+          >
+            <ArrowOutward />
+          </IconButton>
         )}
         {service.source && (
-          <Button size="small" href={service.source} rel="noopener" startIcon={<GitHub />}>
-            {text.services.source}
-          </Button>
+          <IconButton
+            href={service.source}
+            rel="noopener"
+            aria-label={text.services.source}
+            title={text.services.source}
+            color="primary"
+          >
+            <GitHub />
+          </IconButton>
         )}
       </CardActions>
     </Card>

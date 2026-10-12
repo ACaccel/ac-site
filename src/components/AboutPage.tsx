@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react';
-import GitHub from '@mui/icons-material/GitHub';
-import Link from '@mui/icons-material/Link';
 import MailOutlined from '@mui/icons-material/MailOutlined';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
+import LinkIcon from './LinkIcon';
 import PageHeader from './PageHeader';
 import Prose from './Prose';
 import { profile } from '../data/profile';
@@ -78,7 +77,7 @@ export default function AboutPage({ experience, children }: Props) {
               variant="outlined"
               href={link.href}
               rel="me noopener"
-              startIcon={link.label === 'GitHub' ? <GitHub /> : <Link />}
+              startIcon={<LinkIcon href={link.href} />}
             >
               {link.label}
             </Button>

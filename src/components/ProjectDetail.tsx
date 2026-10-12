@@ -1,13 +1,12 @@
 import type { ReactNode } from 'react';
 import ArrowOutward from '@mui/icons-material/ArrowOutward';
-import GitHub from '@mui/icons-material/GitHub';
-import Link from '@mui/icons-material/Link';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ThemeRoot from '../theme/ThemeRoot';
+import LinkIcon from './LinkIcon';
 import Prose from './Prose';
 import type { ProjectSummary } from '../data/projects';
 import type { Service } from '../data/services';
@@ -53,7 +52,7 @@ export default function ProjectDetail({ project, links, service, children }: Pro
                 variant="outlined"
                 href={link.href}
                 rel="noopener"
-                startIcon={link.label === 'GitHub' ? <GitHub /> : <Link />}
+                startIcon={<LinkIcon href={link.href} />}
               >
                 {link.label}
               </Button>
