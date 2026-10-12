@@ -9,22 +9,24 @@
 profile:
   name: ACaccel
   # One sentence under the name on the homepage.
-  tagline: 目前在臺灣大學電機工程學系，主要從事軟體開發與伺服器維運。
+  tagline: B.S. & M.S. in Electrical Engineering, National Taiwan University.
   # Optional; shown as an Email button and footer link.
   email: acaccel8763@gmail.com
   links:
     - label: GitHub
       href: https://github.com/ACaccel
+    - label: Discord
+      href: https://discord.com/users/844172941695516682
 
 site:
   # Search engine and link preview description of the homepage.
-  description: '{name} 的個人網站：文章、近況、興趣、作品，以及部署在 acserver.csie.org 上的服務。'
+  description: '{name} 的個人網站：文章、近況、興趣、專案，以及部署在 acserver.csie.org 上的服務。'
   sourceUrl: https://github.com/ACaccel/ac-site
 
 nav:
   posts: 文章
   hobbies: 興趣
-  projects: 作品
+  projects: 專案
   services: 服務
   about: 關於
   # Screen reader name of the navigation bar.
@@ -50,8 +52,8 @@ home:
     title: 興趣
     more: 興趣專區
   projects:
-    title: 精選作品
-    more: 所有作品
+    title: 精選專案
+    more: 所有專案
   services:
     title: 服務
     more: 所有服務
@@ -91,7 +93,7 @@ about:
 
 services:
   title: 服務
-  description: 部署在這台伺服器上的公開服務，按「開啟服務」即可使用。
+  description: 部署的公開服務。
   empty: 目前沒有公開的服務。
   open: 開啟服務
   source: 原始碼
@@ -101,9 +103,9 @@ services:
     archived: 已封存
 
 projects:
-  title: 作品
+  title: 專案
   description: 參與過的專案：要解決的問題、我的角色、做法與成果。
-  empty: 作品介紹準備中。
+  empty: 專案介紹準備中。
   role: 角色：{role}
   open: 開啟服務
 
@@ -118,14 +120,14 @@ hobbies:
   groupsLabel: 分類
   games:
     title: 遊戲
-    description: 玩過與正在玩的遊戲，附上簡短心得。
+    description:
     status:
       playing: 在玩
       finished: 玩完
       paused: 擱置
   media:
     title: 閱讀／動畫／影劇
-    description: 書、動畫與影劇的紀錄和短評。
+    description:
     types:
       book: 書
       anime: 動畫
@@ -141,7 +143,7 @@ hobbies:
         paused: 擱置
   photos:
     title: 攝影／旅行
-    description: 旅行紀錄與照片。
+    description:
     empty: 相簿整理中。
     albumCount: '{count} 本相簿'
     back: 所有相簿
