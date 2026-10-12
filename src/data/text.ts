@@ -12,11 +12,11 @@ function template(...names: string[]) {
   });
 }
 
-/** Optional text; empty or missing hides it. */
+/** Optional text; empty, blank (null in YAML), or missing hides it. */
 const optional = z
   .string()
-  .optional()
-  .transform((value) => value || undefined);
+  .nullish()
+  .transform((value) => value?.trim() || undefined);
 
 const titled = z.strictObject({ title: line, more: line });
 
@@ -51,7 +51,7 @@ const schema = z.strictObject({
   }),
   posts: z.strictObject({
     title: line,
-    description: line,
+    description: optional,
     empty: line,
     allTags: line,
     tagsLabel: line,
@@ -71,7 +71,7 @@ const schema = z.strictObject({
   now: z.strictObject({ title: line, updated: template('date') }),
   about: z.strictObject({
     title: line,
-    description: line,
+    description: optional,
     experience: line,
     contact: line,
     cvNote: optional,
@@ -79,7 +79,7 @@ const schema = z.strictObject({
   }),
   services: z.strictObject({
     title: line,
-    description: line,
+    description: optional,
     empty: line,
     open: line,
     source: line,
@@ -87,14 +87,14 @@ const schema = z.strictObject({
   }),
   projects: z.strictObject({
     title: line,
-    description: line,
+    description: optional,
     empty: line,
     role: template('role'),
     open: line,
   }),
   hobbies: z.strictObject({
     title: line,
-    description: line,
+    description: optional,
     empty: line,
     entryCount: template('count'),
     relatedPosts: line,
@@ -103,12 +103,12 @@ const schema = z.strictObject({
     groupsLabel: line,
     games: z.strictObject({
       title: line,
-      description: line,
+      description: optional,
       status: z.strictObject({ playing: line, finished: line, paused: line }),
     }),
     media: z.strictObject({
       title: line,
-      description: line,
+      description: optional,
       types: z.strictObject({ book: line, anime: line, drama: line }),
       status: z.strictObject({
         book: z.strictObject({ 'in-progress': line, finished: line, paused: line }),
@@ -117,7 +117,7 @@ const schema = z.strictObject({
     }),
     photos: z.strictObject({
       title: line,
-      description: line,
+      description: optional,
       empty: line,
       albumCount: template('count'),
       back: line,

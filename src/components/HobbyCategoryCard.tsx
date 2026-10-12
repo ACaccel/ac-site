@@ -41,9 +41,11 @@ export default function HobbyCategoryCard({ category, countLabel }: Props) {
           <Typography variant="h3" component="h3" sx={{ mt: 1.5 }}>
             {category.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            {category.description}
-          </Typography>
+          {category.description && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              {category.description}
+            </Typography>
+          )}
           {countLabel && (
             <Typography variant="caption" color="primary" component="p" sx={{ mt: 1.5 }}>
               {countLabel}

@@ -17,7 +17,7 @@ import { text } from '../data/text';
 
 interface Props {
   title: string;
-  description: string;
+  description?: string | undefined;
   groups: LogGroup[];
   /** Adds chips linking to each group, for long pages. */
   groupNav?: boolean;

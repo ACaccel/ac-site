@@ -8,7 +8,7 @@ export type HobbyCategoryId = 'games' | 'media' | 'photos';
 export interface HobbyCategory {
   id: HobbyCategoryId;
   title: string;
-  description: string;
+  description?: string | undefined;
   href: string;
   /** Posts with this tag appear as related write-ups. */
   tag: string;

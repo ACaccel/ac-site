@@ -5,7 +5,7 @@ import ThemeRoot from '../theme/ThemeRoot';
 
 interface Props {
   title: string;
-  description?: string;
+  description?: string | undefined;
   /** Extra lines under the title, such as dates or chips. */
   children?: ReactNode;
 }

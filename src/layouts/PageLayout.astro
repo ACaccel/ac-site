@@ -2,20 +2,22 @@
 import BaseLayout from './BaseLayout.astro';
 import PageShell, { type PageWidth } from '../components/PageShell';
 import { getNow } from '../data/now';
+import { site } from '../data/site';
 
 interface Props {
   title: string;
-  description: string;
+  /** Falls back to the site description when empty. */
+  description?: string | undefined;
   width?: PageWidth;
   noindex?: boolean;
   ogType?: 'website' | 'article';
 }
 
-const { width = 'wide', ...head } = Astro.props;
+const { width = 'wide', description, ...head } = Astro.props;
 const now = await getNow();
 ---
 
-<BaseLayout {...head}>
+<BaseLayout {...head} description={description ?? site.description}>
   <PageShell currentPath={Astro.url.pathname} width={width} showNow={now !== undefined}>
     <slot />
   </PageShell>
