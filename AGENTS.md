@@ -42,6 +42,10 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
   paths, internal ports, or personal data beyond what the site already publishes.
 - Adding a service is a data-only change to `services.json`. Paths are single segments such as
   `/name/` and must not be `/en/` or `/_astro/`.
-- No inline scripts or inline styles, so the CSP needs no `'unsafe-inline'`.
+- UI uses Material UI components and design; hand-build only what it cannot cover, in the same
+  style.
+- Material UI injects runtime styles, so the CSP may allow `'unsafe-inline'` in `style-src`.
+  Scripts stay strict: no hand-written inline scripts and no `'unsafe-inline'` in `script-src`;
+  allow framework-generated inline scripts by hash.
 - Output stays fully static; the site runs no server process.
 - Never edit other projects' managed blocks in the shared Nginx site file.
