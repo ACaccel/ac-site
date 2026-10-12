@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 import { parse } from 'yaml';
 // ?raw keeps the file in Vite's module graph, so the dev server reloads on edits.
-import source from '../content/site.yaml?raw';
+import source from '../../content/site.yaml?raw';
 
 const line = z.string().min(1);
 
@@ -148,12 +148,12 @@ function load(): SiteText {
     const problems = result.error.issues
       .map((issue) => `  ${issue.path.join('.') || '(root)'}: ${issue.message}`)
       .join('\n');
-    throw new Error(`src/content/site.yaml is invalid:\n${problems}`);
+    throw new Error(`content/site.yaml is invalid:\n${problems}`);
   }
   return result.data;
 }
 
-/** All short site texts from src/content/site.yaml, validated at build time. */
+/** All short site texts from content/site.yaml, validated at build time. */
 export const text = load();
 
 /** Fills `{key}` placeholders in a text from site.yaml. */

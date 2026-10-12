@@ -30,7 +30,7 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 | `src/layouts/`                            | `BaseLayout` (head, meta) and `PageLayout` (page shell)       |
 | `src/components/`                         | React components; `PageShell` holds the app bar and footer    |
 | `src/theme/`                              | MUI theme and the `ThemeRoot` wrapper every root needs        |
-| `src/content/`                            | Hand-written content; see [docs/writing.md](docs/writing.md)  |
+| `content/`                                | Hand-written content; see [docs/writing.md](docs/writing.md)  |
 | `src/content.config.ts`                   | Content schemas                                               |
 | `src/data/`                               | Content loading; `text.ts` loads and validates `site.yaml`    |
 | `src/integrations/`                       | Build hook removing source images copied into `dist/`         |
@@ -44,7 +44,7 @@ Deployment and rollback: [docs/deployment.md](docs/deployment.md).
 
 - Content is Traditional Chinese (Taiwan); an English edition is undecided. The old `/en/` path
   redirects to `/` in Nginx.
-- Every visible text lives in `src/content/` (short texts in `site.yaml`); code reads it through
+- Every visible text lives in `content/` (short texts in `site.yaml`); code reads it through
   `text` from `src/data/text.ts`. ESLint rejects Chinese text written directly in `src/`.
 - The repository is public: list only public services, and commit no private service names,
   paths, internal ports, or personal data beyond what the site already publishes.

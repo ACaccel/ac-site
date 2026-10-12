@@ -4,7 +4,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import sharp from 'sharp';
 
-const root = join(import.meta.dirname, '..', 'src', 'content', 'albums');
+const root = join(import.meta.dirname, '..', 'content', 'albums');
 const maxSide = 2560;
 const formats = { '.jpg': 'jpeg', '.jpeg': 'jpeg', '.png': 'png', '.webp': 'webp' };
 const checkOnly = process.argv.includes('--check');

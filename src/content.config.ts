@@ -3,7 +3,7 @@ import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const services = defineCollection({
-  loader: file('src/content/services.json'),
+  loader: file('content/services.json'),
   schema: z.strictObject({
     name: z.string().min(1),
     // A single path segment, matching how each service is mounted in nginx.
@@ -17,7 +17,7 @@ const services = defineCollection({
 });
 
 const posts = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+  loader: glob({ pattern: '**/*.md', base: './content/posts' }),
   schema: z.strictObject({
     title: z.string().min(1),
     description: z.string().min(1),
@@ -30,7 +30,7 @@ const posts = defineCollection({
 });
 
 const now = defineCollection({
-  loader: glob({ pattern: 'now.md', base: './src/content' }),
+  loader: glob({ pattern: 'now.md', base: './content' }),
   schema: z.strictObject({
     /** Shown on the homepage card. */
     summary: z.string().min(1),
@@ -46,7 +46,7 @@ const yearMonth = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
 const entryId = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
 
 const experience = defineCollection({
-  loader: file('src/content/experience.yaml'),
+  loader: file('content/experience.yaml'),
   schema: z.strictObject({
     id: entryId,
     title: z.string().min(1),
@@ -64,7 +64,7 @@ const link = z.strictObject({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  loader: glob({ pattern: '**/*.md', base: './content/projects' }),
   schema: z.strictObject({
     title: z.string().min(1),
     summary: z.string().min(1),
@@ -81,7 +81,7 @@ const projects = defineCollection({
   }),
 });
 
-// Hobby log entries; `post` is the id of a longer write-up in src/content/posts.
+// Hobby log entries; `post` is the id of a longer write-up in content/posts.
 const logEntry = {
   id: entryId,
   title: z.string().min(1),
@@ -93,7 +93,7 @@ const logEntry = {
 };
 
 const games = defineCollection({
-  loader: file('src/content/games.yaml'),
+  loader: file('content/games.yaml'),
   schema: z.strictObject({
     ...logEntry,
     status: z.enum(['playing', 'finished', 'paused']),
@@ -102,7 +102,7 @@ const games = defineCollection({
 });
 
 const media = defineCollection({
-  loader: file('src/content/media.yaml'),
+  loader: file('content/media.yaml'),
   schema: z.strictObject({
     ...logEntry,
     type: z.enum(['book', 'anime', 'drama']),
@@ -116,7 +116,7 @@ const albums = defineCollection({
   // One folder per album: albums/<id>/index.md with its photos beside it.
   loader: glob({
     pattern: '*/index.md',
-    base: './src/content/albums',
+    base: './content/albums',
     generateId: ({ entry }) => entry.replace(/\/index\.md$/, ''),
   }),
   schema: ({ image }) =>

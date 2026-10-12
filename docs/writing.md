@@ -1,19 +1,19 @@
 # Writing content
 
-Everything visitors read lives in `src/content/`; editing it needs no code changes.
+Everything visitors read lives in `content/`; editing it needs no code changes.
 
-| File                           | Shown as                                                          |
-| ------------------------------ | ----------------------------------------------------------------- |
-| `src/content/site.yaml`        | All short texts: name, links, navigation, titles, buttons, labels |
-| `src/content/posts/<id>.md`    | Post at `/posts/<id>/`, listed newest first                       |
-| `src/content/now.md`           | Now page at `/now/` and the homepage card                         |
-| `src/content/about.md`         | Introduction on `/about/`                                         |
-| `src/content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)              |
-| `src/content/games.yaml`       | Games on `/hobbies/games/`                                        |
-| `src/content/media.yaml`       | Books, anime, dramas on `/hobbies/media/`                         |
-| `src/content/albums/<id>/`     | Album at `/hobbies/photos/<id>/`                                  |
-| `src/content/services.json`    | Services on `/services/` and the homepage                         |
-| `src/content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage     |
+| File                       | Shown as                                                          |
+| -------------------------- | ----------------------------------------------------------------- |
+| `content/site.yaml`        | All short texts: name, links, navigation, titles, buttons, labels |
+| `content/posts/<id>.md`    | Post at `/posts/<id>/`, listed newest first                       |
+| `content/now.md`           | Now page at `/now/` and the homepage card                         |
+| `content/about.md`         | Introduction on `/about/`                                         |
+| `content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)              |
+| `content/games.yaml`       | Games on `/hobbies/games/`                                        |
+| `content/media.yaml`       | Books, anime, dramas on `/hobbies/media/`                         |
+| `content/albums/<id>/`     | Album at `/hobbies/photos/<id>/`                                  |
+| `content/services.json`    | Services on `/services/` and the homepage                         |
+| `content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage     |
 
 ## Short texts
 
@@ -29,7 +29,7 @@ Everything visitors read lives in `src/content/`; editing it needs no code chang
 ## Posts
 
 The file name becomes the URL, so use lowercase words joined by hyphens, such as
-`nginx-routing.md`. [`example-post.md`](../src/content/posts/example-post.md) is a draft
+`nginx-routing.md`. [`example-post.md`](../content/posts/example-post.md) is a draft
 template.
 
 Front matter fields:
@@ -63,7 +63,7 @@ the open button and leave the homepage), and `stack` (technology names).
 
 ## Projects
 
-[`example-project.md`](../src/content/projects/example-project.md) is a draft template with the
+[`example-project.md`](../content/projects/example-project.md) is a draft template with the
 suggested sections. Front matter: `title`, `summary`, `role` (such as 開發, 協作, 代管), `start`
 and optional `end` (`YYYY-MM`), and optional `stack`, `links` (`label` and HTTPS `href`),
 `service` (a key in `services.json`, adds an open button), `featured` (show on the homepage),
@@ -86,8 +86,8 @@ Posts tagged `games`, `media`, or `travel` appear as related posts in the matchi
 
 ## Photos
 
-Each album is a folder `src/content/albums/<id>/` with `index.md` and its photos;
-[`example-album`](../src/content/albums/example-album/index.md) is a draft template. Front
+Each album is a folder `content/albums/<id>/` with `index.md` and its photos;
+[`example-album`](../content/albums/example-album/index.md) is a draft template. Front
 matter: `title`, `date`, `description`, `cover` and `photos[].src` (paths such as
 `./photo-1.jpg`), `photos[].alt` (what the photo shows), and optional `location`,
 `photos[].caption`, and `draft`.

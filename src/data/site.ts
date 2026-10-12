@@ -5,7 +5,7 @@ export interface NavItem {
   href: string;
 }
 
-/** Site-wide settings; texts come from src/content/site.yaml. */
+/** Site-wide settings; texts come from content/site.yaml. */
 export const site = {
   description: text.site.description,
   sourceUrl: text.site.sourceUrl,

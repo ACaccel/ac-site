@@ -17,14 +17,14 @@ export default defineConfig(
     languageOptions: { globals: globals.node },
   },
   {
-    // Visible text lives in src/content/site.yaml so it can be edited in one place.
+    // Visible text lives in content/site.yaml so it can be edited in one place.
     files: ['src/**/*.{ts,tsx,astro}'],
     rules: {
       'no-restricted-syntax': [
         'error',
         ...['Literal[value', 'TemplateElement[value.raw', 'JSXText[value'].map((node) => ({
           selector: `${node}=/${cjk}/]`,
-          message: 'Move this text to src/content/site.yaml and read it through `text`.',
+          message: 'Move this text to content/site.yaml and read it through `text`.',
         })),
       ],
     },
