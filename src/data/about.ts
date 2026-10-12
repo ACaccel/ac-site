@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { formatPeriod } from './dates';
 
 export interface Experience {
   id: string;
@@ -6,11 +7,6 @@ export interface Experience {
   organization: string;
   period: string;
   description?: string | undefined;
-}
-
-function formatYearMonth(value: string): string {
-  const [year, month] = value.split('-');
-  return `${year}年${Number(month)}月`;
 }
 
 /** Experience entries, newest start first. */
@@ -22,7 +18,7 @@ export async function getExperience(): Promise<Experience[]> {
       id,
       title: data.title,
       organization: data.organization,
-      period: `${formatYearMonth(data.start)} – ${data.end ? formatYearMonth(data.end) : '現在'}`,
+      period: formatPeriod(data.start, data.end),
       description: data.description,
     }));
 }

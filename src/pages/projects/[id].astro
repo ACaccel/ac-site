@@ -1,0 +1,37 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import ProjectDetail from '../../components/ProjectDetail';
+import { profile } from '../../data/profile';
+import {
+  getProjects,
+  getProjectService,
+  toProjectSummary,
+  type Project,
+} from '../../data/projects';
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const service = await getProjectService(project);
+---
+
+<PageLayout
+  title={`${project.data.title} | ${profile.name}`}
+  description={project.data.summary}
+  width="narrow"
+  ogType="article"
+>
+  <ProjectDetail project={toProjectSummary(project)} links={project.data.links} service={service}>
+    <Content />
+  </ProjectDetail>
+</PageLayout>

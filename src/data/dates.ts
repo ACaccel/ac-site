@@ -14,3 +14,13 @@ export function formatDate(date: Date): string {
 export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+function formatYearMonth(value: string): string {
+  const [year, month] = value.split('-');
+  return `${year}年${Number(month)}月`;
+}
+
+/** `YYYY-MM` range such as `2024年9月 – 現在`; a missing end means ongoing. */
+export function formatPeriod(start: string, end?: string): string {
+  return `${formatYearMonth(start)} – ${end ? formatYearMonth(end) : '現在'}`;
+}

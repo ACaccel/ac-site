@@ -1,0 +1,14 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import PageHeader from '../../components/PageHeader';
+import ProjectList from '../../components/ProjectList';
+import { profile } from '../../data/profile';
+import { getProjects, toProjectSummary } from '../../data/projects';
+
+const projects = (await getProjects()).map(toProjectSummary);
+---
+
+<PageLayout title={`作品 | ${profile.name}`} description={`${profile.name} 參與的專案與作品。`}>
+  <PageHeader title="作品" description="參與過的專案：要解決的問題、我的角色、做法與成果。" />
+  <ProjectList projects={projects} />
+</PageLayout>

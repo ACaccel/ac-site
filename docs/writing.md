@@ -2,14 +2,15 @@
 
 Site text lives in Markdown files under `src/content/`; editing them needs no code changes.
 
-| File                          | Shown as                                             |
-| ----------------------------- | ---------------------------------------------------- |
-| `src/content/posts/<id>.md`   | Post at `/posts/<id>/`, listed newest first          |
-| `src/content/now.md`          | Now page at `/now/` and the homepage card            |
-| `src/content/about.md`        | Introduction on `/about/`                            |
-| `src/content/experience.yaml` | Experience summary on `/about/` (hidden while empty) |
-| `src/content/services.json`   | Services on the homepage                             |
-| `src/data/profile.ts`         | Name, tagline, profile links, contact email          |
+| File                           | Shown as                                                      |
+| ------------------------------ | ------------------------------------------------------------- |
+| `src/content/posts/<id>.md`    | Post at `/posts/<id>/`, listed newest first                   |
+| `src/content/now.md`           | Now page at `/now/` and the homepage card                     |
+| `src/content/about.md`         | Introduction on `/about/`                                     |
+| `src/content/experience.yaml`  | Experience summary on `/about/` (hidden while empty)          |
+| `src/content/services.json`    | Services on `/services/` and the homepage                     |
+| `src/content/projects/<id>.md` | Project at `/projects/<id>/`; `featured` ones on the homepage |
+| `src/data/profile.ts`          | Name, tagline, profile links, contact email                   |
 
 ## Posts
 
@@ -39,6 +40,20 @@ posts also appear in the RSS feed at `/rss.xml`.
 `now.md` front matter: `summary` (one or two sentences for the homepage card), `updated`
 (`YYYY-MM-DD`), and `draft`. While `draft: true`, the page, the homepage card, and the footer
 link stay out of the deployed site.
+
+## Services
+
+Each key in `services.json` maps to `name`, `path` (`/name/`), `description`, and optional
+`source` (HTTPS URL), `status` (`active` default, `beta`, or `archived`; archived services lose
+the open button and leave the homepage), and `stack` (technology names).
+
+## Projects
+
+[`example-project.md`](../src/content/projects/example-project.md) is a draft template with the
+suggested sections. Front matter: `title`, `summary`, `role` (such as 開發, 協作, 代管), `start`
+and optional `end` (`YYYY-MM`), and optional `stack`, `links` (`label` and HTTPS `href`),
+`service` (a key in `services.json`, adds an open button), `featured` (show on the homepage),
+and `draft`.
 
 ## Experience
 

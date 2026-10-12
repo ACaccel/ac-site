@@ -10,21 +10,24 @@ import ThemeRoot from '../theme/ThemeRoot';
 import CardGrid from './CardGrid';
 import NowCard, { type NowSummary } from './NowCard';
 import PostCard from './PostCard';
+import ProjectCard from './ProjectCard';
 import SectionHeader from './SectionHeader';
 import ServiceCard from './ServiceCard';
 import { profile } from '../data/profile';
 import type { PostSummary } from '../data/posts';
+import type { ProjectSummary } from '../data/projects';
 import type { Service } from '../data/services';
 
 interface Props {
   now?: NowSummary | undefined;
   posts: PostSummary[];
+  projects: ProjectSummary[];
   services: Service[];
 }
 
 const sectionSx = { mt: { xs: 6, md: 8 } };
 
-export default function HomePage({ now, posts, services }: Props) {
+export default function HomePage({ now, posts, projects, services }: Props) {
   return (
     <ThemeRoot>
       <Box component="section" sx={{ py: { xs: 2, md: 4 } }}>
@@ -78,6 +81,23 @@ export default function HomePage({ now, posts, services }: Props) {
             {posts.map((post) => (
               <li key={post.href}>
                 <PostCard post={post} />
+              </li>
+            ))}
+          </CardGrid>
+        </Box>
+      )}
+
+      {projects.length > 0 && (
+        <Box component="section" aria-labelledby="projects-heading" sx={sectionSx}>
+          <SectionHeader
+            id="projects-heading"
+            title="精選作品"
+            more={{ href: '/projects/', label: '所有作品' }}
+          />
+          <CardGrid columns={2}>
+            {projects.map((project) => (
+              <li key={project.href}>
+                <ProjectCard project={project} />
               </li>
             ))}
           </CardGrid>

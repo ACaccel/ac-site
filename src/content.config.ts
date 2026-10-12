@@ -10,6 +10,9 @@ const services = defineCollection({
     path: z.string().regex(/^\/[a-z0-9-]+\/$/),
     description: z.string().min(1),
     source: z.url({ protocol: /^https$/ }).optional(),
+    status: z.enum(['active', 'beta', 'archived']).default('active'),
+    /** Main technologies, shown as chips on /services/. */
+    stack: z.array(z.string().min(1)).default([]),
   }),
 });
 
@@ -55,4 +58,27 @@ const experience = defineCollection({
   }),
 });
 
-export const collections = { services, posts, now, experience };
+const link = z.strictObject({
+  label: z.string().min(1),
+  href: z.url({ protocol: /^https$/ }),
+});
+
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: z.strictObject({
+    title: z.string().min(1),
+    summary: z.string().min(1),
+    /** Your part in the project, such as 開發, 協作, or 代管. */
+    role: z.string().min(1),
+    start: yearMonth,
+    end: yearMonth.optional(),
+    stack: z.array(z.string().min(1)).default([]),
+    links: z.array(link).default([]),
+    /** Key of a related entry in services.json. */
+    service: z.string().optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { services, posts, now, experience, projects };
