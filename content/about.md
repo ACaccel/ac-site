@@ -1,1 +1,1 @@
-目前在臺灣大學電機工程學系，主要從事軟體開發與伺服器維運。
+B.S. & M.S. in Electrical Engineering, National Taiwan University.
